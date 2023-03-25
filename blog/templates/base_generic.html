@@ -6,7 +6,13 @@
 </head>
 <body>
     <div>
-        {% block sidebar %}{% endblock %}
+        {% block sidebar %}
+        <ul>
+            <li><a href="\">Home</a></li>
+            <li><a href="">All blogs</a></li>
+            <li><a href="{% url 'bloggers'%}">All bloggers</a></li>
+        </ul>
+        {% endblock %}
     </div>
     <div>
         {% block content%}{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base_generic.html' %}
+
+{% block content%}
+    <div>
+        <h1>{{blogger.first_name}} {{blogger.last_name}}</h1>
+        <h3>About blogger:</h3>
+        <p>
+            {{blogger.about}}
+        </p>
+    </div>
+{% endblock %}

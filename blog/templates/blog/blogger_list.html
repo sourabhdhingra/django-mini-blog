@@ -4,8 +4,8 @@
 <div>
     <h1>Meet our bloggers!</h1>
     <ul>
-        {% for blogger in blogger_list %}
-        <li>{{blogger.first_name}} {{blogger.last_name}} </li>
+        {% for blogger in blogger_list %} 
+        <li><a href="{% url 'blogger-detail' blogger.id %}">{{blogger.first_name}} {{blogger.last_name}}</a> </li>
         {% endfor %}
     </ul>
 </div>

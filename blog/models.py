@@ -11,3 +11,13 @@ class Blogger(models.Model):
         return f'{self.first_name} {self.last_name}'
     
     
+class BlogPost(models.Model):
+    title = models.CharField(max_length=300)
+    # a blogger can be an author of many posts but each post
+    # would have only one author: Many-to-one relationship
+    author = models.ForeignKey(Blogger, on_delete=models.CASCADE)
+    publish_date = models.DateField()
+    content = models.TextField()
+
+    def __str__(self) -> str:
+        return self.title

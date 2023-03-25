@@ -19,3 +19,7 @@ class BloggerDetail(generic.DetailView):
 
 class BlogPostList(generic.ListView):
     model = models.BlogPost
+
+
+class BlogPostDetail(generic.DetailView):
+    model = models.BlogPost

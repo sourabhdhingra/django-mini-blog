@@ -1,0 +1,12 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div>
+    <h1>Browse blogs!</h1>
+    <ul>
+        {% for blogpost in blogpost_list %} 
+        <li><a href="{#% url 'blogpost-detail' blogpost.id %#}">{{blogpost.title}}</a> </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

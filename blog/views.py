@@ -39,6 +39,15 @@ class RegisterFormView(CreateView):
 
 class BlogPostCreate(LoginRequiredMixin, CreateView):
     model = models.BlogPost
-    success_url = reverse_lazy('blogpost-detail')
     fields = '__all__'
 
+    def get_success_url(self) -> str:
+        return reverse_lazy('blogpost-detail', kwargs={'pk': self.object.pk})
+
+
+class BloggerCreate(LoginRequiredMixin, CreateView):
+    model = models.Blogger
+    fields = '__all__'
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('blogger-detail', kwargs={'pk': self.object.pk})

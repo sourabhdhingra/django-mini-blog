@@ -1,7 +1,11 @@
+from django.http import HttpResponse
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from . import models
+from django.views.generic.edit import FormView, CreateView
+from django.contrib import messages
+from . import models, forms
 
 
 # Create your views here.
@@ -25,11 +29,17 @@ class BlogPostDetail(LoginRequiredMixin, generic.DetailView):
     model = models.BlogPost
 
 
-# class BloggerLogin(LoginView):
-#     redirect_authenticated_user = True
+class RegisterFormView(CreateView):
+    template_name = 'register.html'
+    form_class = forms.RegisterForm
+    success_url = reverse_lazy('login')
 
-#     def get_success_url(self) -> str:
-#         return reverse_lazy('tasks')
-    
-#     def form_invalid(self, form: _FormT) -> HttpResponse:
-#         return 
+    def form_valid(self, form) -> HttpResponse:
+        return super().form_valid(form)
+
+
+class BlogPostCreate(LoginRequiredMixin, CreateView):
+    model = models.BlogPost
+    success_url = reverse_lazy('blogpost-detail')
+    fields = '__all__'
+

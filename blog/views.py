@@ -3,8 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import FormView, CreateView
-from django.contrib import messages
+from django.views.generic.edit import CreateView
 from . import models, forms
 
 

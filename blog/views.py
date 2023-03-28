@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from . import models, forms
 
 
@@ -45,10 +45,21 @@ class BlogPostCreate(LoginRequiredMixin, CreateView):
     def get_success_url(self) -> str:
         return reverse_lazy('blogpost-detail', kwargs={'pk': self.object.pk})
 
+class CreateUpdateView(UpdateView):
+
+    def get_object(self, queryset=None):
+        try:
+            return super().get_object(queryset)
+        except AttributeError:
+            return None
 
 class BloggerCreate(LoginRequiredMixin, CreateView):
     form_class = forms.BloggerForm
     template_name = 'blog/blogger_form.html'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['user_linked_blogger'] = models.Blogger.objects.filter(user=self.request.user)
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         blogger = form.save(commit=False)

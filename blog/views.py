@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+from django.forms import BaseModelForm
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -46,8 +47,15 @@ class BlogPostCreate(LoginRequiredMixin, CreateView):
 
 
 class BloggerCreate(LoginRequiredMixin, CreateView):
-    model = models.Blogger
-    fields = '__all__'
+    form_class = forms.BloggerForm
+    template_name = 'blog/blogger_form.html'
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        blogger = form.save(commit=False)
+        blogger.user = self.request.user
+        blogger.save()
+        self.object = blogger
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self) -> str:
         return reverse_lazy('blogger-detail', kwargs={'pk': self.object.pk})

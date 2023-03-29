@@ -13,23 +13,6 @@ from . import models, forms
 def home(request):
     return render(request, 'home.html')
 
-
-class BloggerList(LoginRequiredMixin, generic.ListView):
-    model = models.Blogger
-
-
-class BloggerDetail(LoginRequiredMixin, generic.DetailView):
-    model = models.Blogger
-
-
-class BlogPostList(LoginRequiredMixin, generic.ListView):
-    model = models.BlogPost
-
-
-class BlogPostDetail(LoginRequiredMixin, generic.DetailView):
-    model = models.BlogPost
-
-
 class RegisterFormView(CreateView):
     template_name = 'register.html'
     form_class = forms.RegisterForm
@@ -38,13 +21,12 @@ class RegisterFormView(CreateView):
     def form_valid(self, form) -> HttpResponse:
         return super().form_valid(form)
 
+class BloggerList(LoginRequiredMixin, generic.ListView):
+    model = models.Blogger
 
-class BlogPostCreate(LoginRequiredMixin, CreateView):
-    model = models.BlogPost
-    fields = '__all__'
 
-    def get_success_url(self) -> str:
-        return reverse_lazy('blogpost-detail', kwargs={'pk': self.object.pk})
+class BloggerDetail(LoginRequiredMixin, generic.DetailView):
+    model = models.Blogger
 
 
 class BloggerCreate(LoginRequiredMixin, CreateView):
@@ -64,9 +46,34 @@ class BloggerCreate(LoginRequiredMixin, CreateView):
     def get_success_url(self) -> str:
         return reverse_lazy('blogger-detail', kwargs={'pk': self.object.pk})
 
+
 class BloggerUpdate(LoginRequiredMixin, UpdateView):
     model = models.Blogger
     form_class = forms.BloggerForm
     template_name = 'blog/blogger_form.html'
     template_name_suffix = '_update_form'
-    
+
+
+class BlogPostList(LoginRequiredMixin, generic.ListView):
+    model = models.BlogPost
+
+
+class BlogPostDetail(LoginRequiredMixin, generic.DetailView):
+    model = models.BlogPost
+
+
+class BlogPostCreate(LoginRequiredMixin, CreateView):
+    model = models.BlogPost
+    fields = ['title', 'publish_date', 'content']
+
+
+    def form_valid(self, form) -> HttpResponse:
+        blogpost = form.save(commit=False)
+        blogpost.author = models.Blogger.objects.get(user=self.request.user)
+        blogpost.save()
+        self.object = blogpost
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('blogpost-detail', kwargs={'pk': self.object.pk})
+

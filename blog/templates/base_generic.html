@@ -13,10 +13,10 @@
             <li><a href="{% url 'bloggers' %}">All bloggers</a></li>
             {% if user.is_authenticated %}
             <li>User: {{ user.get_username }}</li>
-                {% if not userlinked_blogger %}
+                {% if userlinked_blogger is None%}
                     <li><a href="{% url 'blogger-create' %}">About yourself!</a> </li>
                 {% else %}
-                    <li><a href="{#%url 'blogger-update' userlinked_blogger.id %}">About yourself!</a> </li>
+                    <li><a href="{% url 'blogger-update' userlinked_blogger.id %}">About yourself!</a> </li>
                 {% endif %}
             <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}

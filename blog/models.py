@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
 
 # Create your models here.
@@ -10,6 +11,10 @@ class Blogger(models.Model):
 
     def __str__(self) -> str:
         return f'{self.user.first_name} {self.user.last_name}'
+    
+    def get_absolute_url(self) -> str:
+        return reverse_lazy('blogger-detail', kwargs={'pk': self.pk})
+    
     
 class BlogPost(models.Model):
     title = models.CharField(max_length=300)

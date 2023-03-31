@@ -17,11 +17,12 @@ class Blogger(models.Model):
     
     
 class BlogPost(models.Model):
-    title = models.CharField(max_length=300)
+    title = models.CharField(max_length=300, unique_for_date='publish_date')
     # a blogger can be an author of many posts but each post
     # would have only one author: Many-to-one relationship
     author = models.ForeignKey(Blogger, on_delete=models.CASCADE)
-    publish_date = models.DateField()
+    publish_date = models.DateTimeField(editable=False, auto_now_add=True)
+    last_updated = models.DateTimeField(editable=False, auto_now=True)
     content = models.TextField()
 
     def __str__(self) -> str:

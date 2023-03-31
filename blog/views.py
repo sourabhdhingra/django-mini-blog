@@ -51,8 +51,6 @@ class BloggerUpdate(LoginRequiredMixin, UpdateView):
     model = models.Blogger
     form_class = forms.BloggerForm
     template_name = 'blog/blogger_form.html'
-    template_name_suffix = '_update_form'
-
 
 class BlogPostList(LoginRequiredMixin, generic.ListView):
     model = models.BlogPost
@@ -74,7 +72,7 @@ class BlogPostDetail(LoginRequiredMixin, generic.DetailView):
 
 class BlogPostCreate(LoginRequiredMixin, CreateView):
     model = models.BlogPost
-    fields = ['title', 'publish_date', 'content']
+    fields = ['title', 'content']
 
 
     def form_valid(self, form) -> HttpResponse:
@@ -90,6 +88,6 @@ class BlogPostCreate(LoginRequiredMixin, CreateView):
 
 class BlogPostUpdate(LoginRequiredMixin, UpdateView):
     model = models.BlogPost
-    fields = ['title', 'publish_date', 'content']
+    fields = ['title', 'content']
 
 

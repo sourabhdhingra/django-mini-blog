@@ -27,6 +27,9 @@ class BlogPost(models.Model):
     def __str__(self) -> str:
         return self.title
     
+    def get_absolute_url(self) -> str:
+        return reverse_lazy('blogpost-detail', kwargs={'pk': self.pk})
+    
 
 class Comment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="UUID for the comment from the user")

@@ -8,8 +8,8 @@
     <div>
         {% block sidebar %}
         <ul>
-            <li><a href="\blog">Home</a></li>
-            <li><a href="\blogs">All blogs</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'blogs' %}">All blogs</a></li>
             <li><a href="{% url 'bloggers' %}">All bloggers</a></li>
             {% if user.is_authenticated %}
             <li>User: {{ user.get_username }}</li>
@@ -18,6 +18,7 @@
                 {% else %}
                     <li><a href="{% url 'blogger-update' userlinked_blogger.id %}">About yourself!</a> </li>
                     <li><a href="{% url 'blogpost-create'  %}">Create a blogpost!</a> </li>
+                    <li><a href="{% url 'user-blogs' userlinked_blogger.user.username %}">See your blogposts!</a> </li>
                 {% endif %}
             <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}

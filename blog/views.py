@@ -57,6 +57,16 @@ class BloggerUpdate(LoginRequiredMixin, UpdateView):
 class BlogPostList(LoginRequiredMixin, generic.ListView):
     model = models.BlogPost
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if 'username' in self.kwargs:
+            blogger_name = self.kwargs['username']
+            if blogger_name:
+                found_user = models.User.objects.get(username=blogger_name)
+                found_blogger = models.Blogger.objects.get(user=found_user)
+                queryset =  models.BlogPost.objects.filter(author=found_blogger)
+        return queryset
+
 
 class BlogPostDetail(LoginRequiredMixin, generic.DetailView):
     model = models.BlogPost
@@ -76,4 +86,10 @@ class BlogPostCreate(LoginRequiredMixin, CreateView):
 
     def get_success_url(self) -> str:
         return reverse_lazy('blogpost-detail', kwargs={'pk': self.object.pk})
+
+
+class BlogPostUpdate(LoginRequiredMixin, UpdateView):
+    model = models.BlogPost
+    fields = ['title', 'publish_date', 'content']
+
 

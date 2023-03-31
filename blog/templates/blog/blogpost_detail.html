@@ -8,5 +8,8 @@
         <p>
             {{blogpost.content}}
         </p>
+        {% if userlinked_blogger.id == blogpost.author.id %}
+            <p><a href="{% url 'blogpost-update' blogpost.id%}">Update</a></p>
+        {% endif %}
     </div>
 {% endblock %}

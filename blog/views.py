@@ -49,10 +49,13 @@ class BloggerCreate(LoginRequiredMixin, CreateView):
         return reverse_lazy('blogger-detail', kwargs={'pk': self.object.pk})
 
 
-class BloggerUpdate(LoginRequiredMixin, UpdateView):
+class BloggerUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = models.Blogger
     form_class = forms.BloggerForm
     template_name = 'blog/blogger_form.html'
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
 
 class BlogPostList(LoginRequiredMixin, generic.ListView):
     model = models.BlogPost

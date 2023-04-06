@@ -7,5 +7,9 @@
         <p>
             {{blogger.about}}
         </p>
+        {% if userlinked_blogger.id == blogger.id %}
+            <p><a href="{% url 'blogger-update' blogger.id %}">Update</a></p>
+            <p><a href="{% url 'blogger-delete' blogger.id %}">Delete</a></p>
+        {% endif %}
     </div>
 {% endblock %}

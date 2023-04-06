@@ -57,6 +57,13 @@ class BloggerUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.request.user == self.get_object().user
 
+class BloggerDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = models.Blogger
+    success_url = '/'
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
+
 class BlogPostList(LoginRequiredMixin, generic.ListView):
     model = models.BlogPost
 

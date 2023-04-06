@@ -2,6 +2,11 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+from django.db import IntegrityError
+import logging
+
 
 
 # Create your models here.
@@ -39,3 +44,27 @@ class Comment(models.Model):
 
     def __str__(self) -> str:
         return f'{self.user}: {self.id}'
+    
+
+# permissions
+# class BlogPostAuthorPermission(Permission):
+#     class Meta:
+#         proxy = True
+#         verbose_name = 'Can edit own blog post'
+
+#     def has_permission(self, user, obj=None):
+#         if obj is None:
+#             return False
+#         return obj.author == user
+
+# # creating the permission to edit own blog post
+# try:
+#     content_type = ContentType.objects.get_for_model(BlogPost)
+#     permission = BlogPostAuthorPermission.objects.create(
+#         codename='edit_own_blog_post',
+#         name='Can edit own blog post',
+#         content_type= content_type,
+#     )
+# except IntegrityError as e:
+#     if 'UNIQUE constraint failed' in e.args[0]:
+#         logging.warn('Permisssion with codename already exist')

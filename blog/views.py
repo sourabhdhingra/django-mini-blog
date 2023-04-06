@@ -3,8 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Permission
 import logging
 from . import models, forms
 
@@ -76,6 +78,7 @@ class BlogPostCreate(LoginRequiredMixin, CreateView):
 
 
     def form_valid(self, form) -> HttpResponse:
+        # saving the blogpost but first mapping the logged in user to the blogger
         blogpost = form.save(commit=False)
         blogpost.author = models.Blogger.objects.get(user=self.request.user)
         blogpost.save()
@@ -85,9 +88,12 @@ class BlogPostCreate(LoginRequiredMixin, CreateView):
     def get_success_url(self) -> str:
         return reverse_lazy('blogpost-detail', kwargs={'pk': self.object.pk})
 
-
-class BlogPostUpdate(LoginRequiredMixin, UpdateView):
+class BlogPostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = models.BlogPost
     fields = ['title', 'content']
+
+    def test_func(self):
+        logging.warn(f"self.request.user = {self.request.user} and blogpost author = {self.get_object().author.user}")
+        return self.request.user == self.get_object().author.user
 
 

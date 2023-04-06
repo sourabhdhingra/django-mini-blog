@@ -13,5 +13,11 @@
             <p><a href="{% url 'blogpost-update' blogpost.id%}">Update</a></p>
             <p><a href="{% url 'blogpost-delete' blogpost.id%}">Delete</a></p>
         {% endif %}
+        <hr>
+        <div>
+            {% for comment in blogpost.comment_set.all %}
+                <p><strong>{{comment.commentor}}:</strong>{{ comment.content}}</p>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

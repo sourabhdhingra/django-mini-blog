@@ -35,7 +35,10 @@ class BlogPost(models.Model):
 class Comment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="UUID for the comment from the user")
     on_blogpost = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    commentor = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     content = models.TextField(max_length=300)
+    posted_on = models.DateTimeField(editable=False, auto_now=True)
+    edited_at = models.DateTimeField(editable=False, auto_now_add=True)
 
     def __str__(self) -> str:
-        return f'{self.user}: {self.id}'
+        return f'{self.commentor.username}: {self.edited_at}'

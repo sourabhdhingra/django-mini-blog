@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
 import logging
@@ -100,3 +100,11 @@ class BlogPostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.request.user == self.get_object().author.user
 
 
+class BlogPostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = models.BlogPost
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('user-blogs', kwargs={'username': self.get_object().author.user.username})
+    
+    def test_func(self):
+        return self.request.user == self.get_object().author.user

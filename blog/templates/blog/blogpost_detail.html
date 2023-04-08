@@ -11,7 +11,7 @@
         </p>
         {% if userlinked_blogger.id == blogpost.author.id %}
             <p><a href="{% url 'blogpost-update' blogpost.slug%}">Update</a></p>
-            <p><a href="{% url 'blogpost-delete' blogpost.id%}">Delete</a></p>
+            <p><a href="{% url 'blogpost-delete' blogpost.slug%}">Delete</a></p>
         {% endif %}
         <hr>
         <div>
@@ -24,7 +24,7 @@
             {% endfor %}
         </div>
         <div>
-            <a href="{% url 'comment-create' blogpost.id %}">Add a new comment!</a>
+            <a href="{% url 'comment-create' blogpost.slug %}">Add a new comment!</a>
         </div>
     </div>
 {% endblock %}

@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
+from django.utils.text import slugify
 import logging
 from . import models, forms
 
@@ -91,9 +92,11 @@ class BlogPostCreate(LoginRequiredMixin, CreateView):
         # saving the blogpost but first mapping the logged in user to the blogger
         blogpost = form.save(commit=False)
         blogpost.author = models.Blogger.objects.get(user=self.request.user)
+        blogpost.slug = slugify(blogpost.title)
         blogpost.save()
         self.object = blogpost
         return HttpResponseRedirect(self.get_success_url())
+
 
     def get_success_url(self) -> str:
         return reverse_lazy('blogpost-detail', kwargs={'pk': self.object.pk})

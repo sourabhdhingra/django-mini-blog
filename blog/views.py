@@ -145,3 +145,16 @@ class CommentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     
     def test_func(self):
         return self.get_object().commentor == self.request.user
+
+
+class CommentDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = models.Comment
+
+    def get_success_url(self) -> str:
+        # we use self.get_object() as the URL used for update comment has PK for comment model
+        # and not the blogpost itself
+        return reverse_lazy('blogpost-detail', kwargs={'pk': self.get_object().on_blogpost.id})
+    
+    def test_func(self):
+        return self.get_object().commentor == self.request.user
+

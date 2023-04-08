@@ -24,6 +24,8 @@ class BlogPost(models.Model):
     publish_date = models.DateTimeField(editable=False, auto_now_add=True)
     last_updated = models.DateTimeField(editable=False, auto_now=True)
     content = models.TextField()
+    slug = models.SlugField(max_length=200)
+
 
     def __str__(self) -> str:
         return self.title

@@ -5,13 +5,19 @@ from blog import models
 
 # Register your models here.
 admin.site.register(models.Blogger)
-admin.site.register(models.BlogPost)
 admin.site.register(models.Comment)
 
 class BloggerInline(admin.StackedInline):
     model = models.Blogger
     can_delete = False
     verbose_name_plural = 'blogger'
+
+
+class BlogPostAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ['title']}
+
+
+admin.site.register(models.BlogPost, BlogPostAdmin)
 
 
 # Define a new User admin

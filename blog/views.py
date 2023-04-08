@@ -1,6 +1,6 @@
 from django.forms import BaseModelForm
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
@@ -115,3 +115,19 @@ class BlogPostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     def test_func(self):
         return self.request.user == self.get_object().author.user
+
+
+class CommentCreate(LoginRequiredMixin, CreateView):
+    model = models.Comment
+    fields = ['content']
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('blogpost-detail', kwargs={'pk': self.kwargs['pk']})
+    
+    def form_valid(self, form) -> HttpResponse:
+        # assigning logged in user to the commentor
+        form.instance.commentor = self.request.user
+
+        # associate comment with the blog post id
+        form.instance.on_blogpost  = get_object_or_404(models.BlogPost, pk = self.kwargs['pk'])
+        return super(CommentCreate, self).form_valid(form)

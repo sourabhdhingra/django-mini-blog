@@ -19,5 +19,8 @@
                 <p><strong>{{comment.commentor}}:</strong>{{ comment.content}}</p>
             {% endfor %}
         </div>
+        <div>
+            <a href="{% url 'comment-create' blogpost.id %}">Add a new comment!</a>
+        </div>
     </div>
 {% endblock %}

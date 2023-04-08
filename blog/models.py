@@ -31,7 +31,7 @@ class BlogPost(models.Model):
         return self.title
     
     def get_absolute_url(self) -> str:
-        return reverse_lazy('blogpost-detail', kwargs={'pk': self.pk})
+        return reverse_lazy('blogpost-detail', kwargs={'slug': self.slug})
     
 
 class Comment(models.Model):

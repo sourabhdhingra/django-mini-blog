@@ -10,7 +10,7 @@
             {{blogpost.content}}
         </p>
         {% if userlinked_blogger.id == blogpost.author.id %}
-            <p><a href="{% url 'blogpost-update' blogpost.id%}">Update</a></p>
+            <p><a href="{% url 'blogpost-update' blogpost.slug%}">Update</a></p>
             <p><a href="{% url 'blogpost-delete' blogpost.id%}">Delete</a></p>
         {% endif %}
         <hr>

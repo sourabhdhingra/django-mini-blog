@@ -99,7 +99,7 @@ class BlogPostCreate(LoginRequiredMixin, CreateView):
 
 
     def get_success_url(self) -> str:
-        return reverse_lazy('blogpost-detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('blogpost-detail', kwargs={'slug': self.object.slug})
 
 class BlogPostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = models.BlogPost

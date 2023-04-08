@@ -33,7 +33,7 @@ class BlogPost(models.Model):
     
 
 class Comment(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="UUID for the comment from the user")
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="UUID for the comment from the user")
     on_blogpost = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
     commentor = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     content = models.TextField(max_length=300)

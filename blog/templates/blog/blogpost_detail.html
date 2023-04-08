@@ -17,6 +17,8 @@
         <div>
             {% for comment in blogpost.comment_set.all %}
                 <p><strong>{{comment.commentor}}:</strong>{{ comment.content}}</p>
+                <p><a href="{% url 'comment-update' comment.id %}">Edit</a></p>
+                <p><a href=""></a>Delete</p>
             {% endfor %}
         </div>
         <div>

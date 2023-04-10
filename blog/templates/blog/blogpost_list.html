@@ -5,7 +5,8 @@
     <h1>Browse blogs!</h1>
     <ul>
         {% for blogpost in blogpost_list %} 
-        <li><a href="{% url 'blogpost-detail' blogpost.slug %}">{{blogpost.title}}</a> </li>
+        <li><a href="{% url 'blogpost-detail' blogpost.slug %}">{{blogpost.title}}</a> 
+            ({{blogpost.publish_date}}) - <i><a href="{% url 'blogger-detail' blogpost.author.slug %}">{{blogpost.author.user}}</a></i></li>
         {% endfor %}
     </ul>
 </div>

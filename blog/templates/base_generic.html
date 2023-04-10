@@ -16,7 +16,7 @@
                 {% if userlinked_blogger is None%}
                     <li><a href="{% url 'blogger-create' %}">About yourself!</a> </li>
                 {% else %}
-                    <li><a href="{% url 'blogger-detail' userlinked_blogger.id %}">About yourself!</a> </li>
+                    <li><a href="{% url 'blogger-detail' userlinked_blogger.slug %}">About yourself!</a> </li>
                     <li><a href="{% url 'blogpost-create' %}">Create a blogpost!</a> </li>
                     <li><a href="{% url 'user-blogs' userlinked_blogger.user.username %}">See your blogposts!</a> </li>
                 {% endif %}

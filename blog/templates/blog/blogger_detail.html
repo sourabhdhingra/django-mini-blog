@@ -9,7 +9,7 @@
         </p>
         {% if userlinked_blogger.id == blogger.id %}
             <p><a href="{% url 'blogger-update' blogger.slug %}">Update</a></p>
-            <p><a href="{% url 'blogger-delete' blogger.id %}">Delete</a></p>
+            <p><a href="{% url 'blogger-delete' blogger.slug %}">Delete</a></p>
         {% endif %}
     </div>
 {% endblock %}

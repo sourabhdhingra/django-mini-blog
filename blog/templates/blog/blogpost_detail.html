@@ -18,8 +18,8 @@
             {% for comment in blogpost.comment_set.all %}
                 <p><strong>{{comment.commentor}}:</strong>{{ comment.content}}</p>
                 {% if comment.commentor == user %}
-                    <p><a href="{% url 'comment-update' comment.id %}">Edit</a></p>
-                    <p><a href="{% url 'comment-delete' comment.id %}">Delete</a></p>
+                    <p><a href="{% url 'comment-update' comment.slug %}">Edit</a></p>
+                    <p><a href="{% url 'comment-delete' comment.slug %}">Delete</a></p>
                 {% endif %}
             {% endfor %}
         </div>

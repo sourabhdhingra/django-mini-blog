@@ -14,9 +14,8 @@ class BloggerInline(admin.StackedInline):
 class BloggerAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ['about']}
 
-    def save_model(self, request, obj, form, change):
-        obj.slug = slugify(obj.user.username)
-        return super().save_model(request, obj, form, change)
+    class Media:
+        js = ['js/custom_admin.js']
 
 
 class BlogPostAdmin(admin.ModelAdmin):

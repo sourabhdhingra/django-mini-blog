@@ -69,6 +69,7 @@ class BloggerDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class BlogPostList(LoginRequiredMixin, generic.ListView):
     model = models.BlogPost
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()

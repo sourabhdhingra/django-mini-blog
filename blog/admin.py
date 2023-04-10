@@ -5,13 +5,18 @@ from . import models, utils
 from django.utils.text import slugify
 
 
-# Register your models here.
-admin.site.register(models.Blogger)
-
 class BloggerInline(admin.StackedInline):
     model = models.Blogger
     can_delete = False
     verbose_name_plural = 'blogger'
+
+
+class BloggerAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ['about']}
+
+    def save_model(self, request, obj, form, change):
+        obj.slug = slugify(obj.user.username)
+        return super().save_model(request, obj, form, change)
 
 
 class BlogPostAdmin(admin.ModelAdmin):
@@ -25,6 +30,8 @@ class CommentAdmin(admin.ModelAdmin):
         return super().save_model(request, obj, form, change)
 
 
+# Register your models here.
+admin.site.register(models.Blogger, BloggerAdmin)
 admin.site.register(models.BlogPost, BlogPostAdmin)
 admin.site.register(models.Comment, CommentAdmin)
 

@@ -5,7 +5,7 @@
     <h1>Meet our bloggers!</h1>
     <ul>
         {% for blogger in blogger_list %} 
-        <li><a href="{% url 'blogger-detail' blogger.id %}">{{blogger.user.first_name}} {{blogger.user.last_name}}</a> </li>
+        <li><a href="{% url 'blogger-detail' blogger.slug %}">{{blogger.user.first_name}} {{blogger.user.last_name}}</a> </li>
         {% endfor %}
     </ul>
 </div>

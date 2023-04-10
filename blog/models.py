@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 class Blogger(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
     about = models.TextField(max_length=2000, null=True)
+    slug = models.SlugField(max_length=50)
 
     def __str__(self) -> str:
         return f'{self.user.first_name} {self.user.last_name}'

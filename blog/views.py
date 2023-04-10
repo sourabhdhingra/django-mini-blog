@@ -42,6 +42,7 @@ class BloggerCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         blogger = form.save(commit=False) # so that blogger user can be updated
         blogger.user = self.request.user # setting the authenticated user to blogger user
+        blogger.slug = slugify(self.request.user.username)
         blogger.save() # committing the blogger
         self.object = blogger
         return HttpResponseRedirect(self.get_success_url())
@@ -86,8 +87,6 @@ class BlogPostDetail(LoginRequiredMixin, generic.DetailView):
 class BlogPostCreate(LoginRequiredMixin, CreateView):
     model = models.BlogPost
     fields = ['title', 'content']
-    logging.warn('code reached here ====>')
-
 
 
     def form_valid(self, form) -> HttpResponse:
@@ -101,7 +100,6 @@ class BlogPostCreate(LoginRequiredMixin, CreateView):
 
 
     def get_success_url(self) -> str:
-        logging.warn('blog.views.BlogPostDetail using the slug = {self.object.slug}')
         return reverse_lazy('blogpost-detail', kwargs={'slug': self.object.slug})
 
 class BlogPostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

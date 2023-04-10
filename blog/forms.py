@@ -15,4 +15,4 @@ class RegisterForm(UserCreationForm):
 class BloggerForm(forms.ModelForm):
     class Meta:
         model = models.Blogger
-        exclude = ['user']
+        exclude = ['user', 'slug']

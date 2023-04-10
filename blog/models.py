@@ -39,7 +39,6 @@ class BlogPost(models.Model):
     
 
 class Comment(models.Model):
-    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="UUID for the comment from the user")
     on_blogpost = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
     commentor = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     content = models.TextField(max_length=300)
@@ -47,5 +46,8 @@ class Comment(models.Model):
     edited_at = models.DateTimeField(editable=False, auto_now_add=True)
     slug = models.SlugField(max_length=100)
 
+    class Meta:
+        ordering = ['posted_on']
+
     def __str__(self) -> str:
-        return f'{self.commentor.username}: {self.edited_at}'
+        return f'{self.commentor.username} :{self.content[:30]}'

@@ -15,7 +15,7 @@
         {% endif %}
         <hr>
         <div>
-            {% for comment in blogpost.comment_set.all %}
+            {% for comment in blogpost.comment_set.all|dictsort:"posted_on" %}
                 <p><strong>{{comment.commentor}}:</strong>{{ comment.content}}</p>
                 {% if comment.commentor == user %}
                     <p><a href="{% url 'comment-update' comment.slug %}">Edit</a></p>

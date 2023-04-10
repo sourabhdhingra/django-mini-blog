@@ -27,6 +27,9 @@ class BlogPost(models.Model):
     content = models.TextField()
     slug = models.SlugField(max_length=200)
 
+    class Meta:
+        ordering = ['-publish_date']
+
 
     def __str__(self) -> str:
         return self.title

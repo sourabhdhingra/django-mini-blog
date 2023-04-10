@@ -77,7 +77,7 @@ class BlogPostList(LoginRequiredMixin, generic.ListView):
             if blogger_name:
                 found_user = models.User.objects.get(username=blogger_name)
                 found_blogger = models.Blogger.objects.get(user=found_user)
-                queryset =  models.BlogPost.objects.filter(author=found_blogger)
+                queryset =  models.BlogPost.objects.filter(author=found_blogger).order_by('-publish_date')
         return queryset
 
 

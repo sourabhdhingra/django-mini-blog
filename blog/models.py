@@ -14,7 +14,7 @@ class Blogger(models.Model):
         return f'{self.user.first_name} {self.user.last_name}'
     
     def get_absolute_url(self) -> str:
-        return reverse_lazy('blogger-detail', kwargs={'pk': self.pk})
+        return reverse_lazy('blogger-detail', kwargs={'slug': self.slug})
     
     
 class BlogPost(models.Model):

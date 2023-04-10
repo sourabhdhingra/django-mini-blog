@@ -48,7 +48,7 @@ class BloggerCreate(LoginRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
     
     def get_success_url(self) -> str:
-        return reverse_lazy('blogger-detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('blogger-detail', kwargs={'slug': self.object.slug})
 
 
 class BloggerUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

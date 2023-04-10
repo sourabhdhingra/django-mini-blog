@@ -12,4 +12,12 @@
             <p><a href="{% url 'blogger-delete' blogger.slug %}">Delete</a></p>
         {% endif %}
     </div>
+    <div>
+        <h3>Here are my blogs!</h3>
+        <ul>
+            {% for blogpost in blogger.blogpost_set.all|dictsortreversed:"publish_date" %}
+                <li><a href="{% url 'blogpost-detail' blogpost.slug %}">{{blogpost.title}}</a> ({{blogpost.publish_date}})</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

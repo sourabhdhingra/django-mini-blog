@@ -42,6 +42,7 @@ class Comment(models.Model):
     content = models.TextField(max_length=300)
     posted_on = models.DateTimeField(editable=False, auto_now=True)
     edited_at = models.DateTimeField(editable=False, auto_now_add=True)
+    slug = models.SlugField(max_length=100)
 
     def __str__(self) -> str:
         return f'{self.commentor.username}: {self.edited_at}'

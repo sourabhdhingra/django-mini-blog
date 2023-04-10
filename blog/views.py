@@ -10,6 +10,7 @@ from django.contrib.auth.models import Permission
 from django.utils.text import slugify
 import logging
 from . import models, forms
+from . import utils
 
 
 # Create your views here.
@@ -135,6 +136,9 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         # associate comment with the blog post id
         # we use pk coming from the URL itself to fetch the blogpost
         form.instance.on_blogpost  = get_object_or_404(models.BlogPost, slug = self.kwargs['slug'])
+
+        # populate slug based upon the fields - content's first 50 chars clubbed with posted_on
+        form.instance.slug = slugify(f"{form.instance.commentor.username}-{slugify(form.instance.content[:50])}-{utils.get_random_alphanumeric()}")
         return super(CommentCreate, self).form_valid(form)
 
 

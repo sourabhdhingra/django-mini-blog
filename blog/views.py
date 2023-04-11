@@ -153,6 +153,12 @@ class CommentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = models.Comment
     fields = ['content']
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context['blogpost'] = get_object_or_404(models.BlogPost, slug = self.get_object().on_blogpost.slug)
+        return context
+
     def get_success_url(self) -> str:
         # we use self.get_object() as the URL used for update comment has PK for comment model
         # and not the blogpost itself

@@ -19,7 +19,7 @@
                 <p><strong>{{comment.commentor}}:</strong>{{ comment.content}}</p>
                 {% if comment.commentor == user %}
                     <p><a href="{% url 'comment-update' comment.slug %}">Edit</a></p>
-                    <p><a href="{% url 'comment-delete' comment.slug %}">Delete</a></p>
+                    <p><a href="{% url 'comment-delete' comment.slug %}" id="{{comment.slug}}" >Delete</a></p>
                 {% endif %}
             {% endfor %}
         </div>

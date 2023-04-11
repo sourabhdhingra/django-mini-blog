@@ -8,6 +8,7 @@
             {{ form }}
             </table>
             <input type="submit" value="Confirm" />
+            <button> <a href="{{ view.get_success_url }}#{{object.slug}}" style="text-decoration: none; color: black;">Cancel</a></button>
         </form>
     </div>
 {% endblock %}

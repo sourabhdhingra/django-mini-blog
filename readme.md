@@ -1,12 +1,12 @@
 # Mini Blog in Django
-I created this github project to learn Django which can be reference by others who are interested in walking down the same road.
+I created this github project to learn Django which can be referenced by others who are interested in walking down the same road.
 I will be covering below:
 
 - What is Django?
-- What basics you need to know to grasp what is happening in Django?
+- What basics you need to know to grasp what is happening in Django while doing development?
 - Important use cases and scenarios that one comes across during basic Web Development.
 
-My approach will be help readers learn Django on use case basis rather than forcing one to go through Documentation of Django.
+My approach will be to help readers learn Django on use case basis rather than forcing one to go through Documentation of Django.
 
 ## What is Django?
 

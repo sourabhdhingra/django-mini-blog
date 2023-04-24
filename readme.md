@@ -139,4 +139,25 @@ class Blogger(models.Model):
 6. **Next we will use the admin site to populate data**
 
     - In `urls.py` at project level, we add below code `path('admin/', admin.site.urls),` so that we can access the admin section provided by Django. Now to login to admin one must have created a superuser using `python3 manage.py createsuperuser` (manage.py file is created when you create a django project as stated earlier)
-    - Now using the superuser credentials login to admin site at `http://127.0.0.1:8000/admin` and using admin portal populate some data so that we can later on exploits the generic Views to show the data.
+    - Now using the superuser credentials login to admin site at `http://127.0.0.1:8000/admin` and using admin portal populate some data so that we can later on exploit the generic Views provided by Django to show the data.
+    - Make sure `DEBUG = True`
+
+7. **Usecase 1: Showing the list of data**
+
+    - More often we want to show a list of data available for e.g in our case we would like to show the list of bloggers on a particular page.
+    - Django provides an inbuilt-view for this `django.views.generic.ListView`
+    - We can write a class based view extending the ListView class. We need to tell the new class which model to use.
+        ```
+        from django.views import generic
+
+
+        class BloggerList(generic.ListView):
+            model = models.Blogger
+        ```
+    - In `urls.py` view should be mapped to a particular url pattern. Append this `path('bloggers/', views.BloggerList.as_view(), name='bloggers'),` to `urlpatterns` list. Notice we map the view function in url pattern and to do that with a class based view we use `as_view()` function.
+    - By default template page this list view picks from is `blog\templates\blog\blogger_list.html`. Format of the name is `model_list.html`. Therefore we need to create the template `blogger_list.html`.
+
+8. **Usecase 2: Dealing with the templates and resuing them**
+
+    - In Django we can create a base template that can be extended with other templates. Usually sections that would remain unchanged are put in the base template and the content block that is likey to change with childern template is programmed with the help of Django template language. Refer [link1](https://docs.djangoproject.com/en/4.2/ref/templates/language/) and [link2](https://www.w3schools.com/django/django_template_variables.php)
+    - Base template for this project can be checked [here](blog/templates/base_generic.html) <a href="blog/templates/base_generic.html" target="_blank">here</a>

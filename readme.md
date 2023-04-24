@@ -35,3 +35,5 @@ Now Django is a MVT framework written in python. To develop in Django you must k
 See the diagram below.
 
 ![Django Basic workflow](django_basic_workflow.png)
+
+To know more about Django read here on [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Introduction).

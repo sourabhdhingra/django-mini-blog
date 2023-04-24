@@ -116,3 +116,27 @@ class Blogger(models.Model):
             return render(request, 'home.html')
         ```
     - Now anytime the url `http://127.0.0.1:8000/` would be hit it would load the HTML page `home.html`
+
+5. **Understaing urls.py both at django level and app level**
+
+    - When we create a django project using `django-admin startproject miniblog .` then a file named `urls.py` is created at the project level. 
+    - When we create a django app using `django-admin startapp blog` then another file with same name `urls.py` is added to the app level structure.
+    - Hence we have two `urls.py` files. We use the one at app level to add urls specific to `blog\` and updated the project level `urls.py` to include `blog.urls` 
+        ```
+        # miniblog.urls.py - file at project level includes the urls from app level i.e blog.url.py
+        from django.urls import path, include
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('', include('blog.urls')),
+            path('blog/', include('blog.urls')), # this line help includes the all the urls from blog.urls.py
+            path('accounts/', include('django.contrib.auth.urls')),
+        ]
+        ```
+
+        As an example `blog/blogposts` would load all the blogposts. Check the github code of this project to understand.
+    
+6. **Next we will use the admin site to populate data**
+
+    - In `urls.py` at project level, we add below code `path('admin/', admin.site.urls),` so that we can access the admin section provided by Django. Now to login to admin one must have created a superuser using `python3 manage.py createsuperuser` (manage.py file is created when you create a django project as stated earlier)
+    - Now using the superuser credentials login to admin site at `http://127.0.0.1:8000/admin` and using admin portal populate some data so that we can later on exploits the generic Views to show the data.

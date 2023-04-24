@@ -67,3 +67,29 @@ We will solve the [Django Mini blog Assignment](https://developer.mozilla.org/en
     - A blogger has one-to-many relationship with BlogPost
     - A Comment has many-to-one relationship with user
     - A blogger has one-to-one relatioship with Django inbuilt user
+
+2. **Creating Models in models.py** Django provides `django.contrib.auth.models.Model` class which can be extended to create Models.
+    Blogger model. 
+    - We import the model as `from django.db import models` and use `models.Model` class as shown below.
+    - Now to implement users in Django we can either either extend the AbstratUser and create our custom user or we can use the existing User model as one-to-one key. We have used the later approach. For further reading go through [extending-the-existing-user-model](https://docs.djangoproject.com/en/4.1/topics/auth/customizing/#extending-the-existing-user-model)
+    - Model class provides few functions that one can override to achieve desired functionality.
+        - first function is `__str__` that is overridern to return the desired name for the object which could be displayed in admin site. (Note: Here we assume you have gone through the [tutorial](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Tutorial_local_library_website) )
+        - second function is `get_absolute_url` which is useful when we will dive into views (CreateView, ListView etc). After creating a blogger instance we can use the default redirect to the url provided by this function. In the code below the function returns the path to blogger-detail page. We will further dive into it.
+
+```
+from django.db import models
+from django.contrib.auth.models import User
+from django.urls import reverse_lazy
+
+
+class Blogger(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
+    about = models.TextField(max_length=2000, null=True)
+    slug = models.SlugField(max_length=50)
+
+    def __str__(self) -> str:
+        return f'{self.user.first_name} {self.user.last_name}'
+    
+    def get_absolute_url(self) -> str:
+        return reverse_lazy('blogger-detail', kwargs={'slug': self.slug})
+```

@@ -160,4 +160,4 @@ class Blogger(models.Model):
 8. **Usecase 2: Dealing with the templates and resuing them**
 
     - In Django we can create a base template that can be extended with other templates. Usually sections that would remain unchanged are put in the base template and the content block that is likey to change with childern template is programmed with the help of Django template language. Refer [link1](https://docs.djangoproject.com/en/4.2/ref/templates/language/) and [link2](https://www.w3schools.com/django/django_template_variables.php)
-    - Base template for this project can be checked [here](blog/templates/base_generic.html) <a href="blog/templates/base_generic.html" target="_blank">here</a>
+    - Base template for this project can be checked [here](blog/templates/base_generic.html)

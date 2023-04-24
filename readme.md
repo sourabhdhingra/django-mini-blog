@@ -93,3 +93,8 @@ class Blogger(models.Model):
     def get_absolute_url(self) -> str:
         return reverse_lazy('blogger-detail', kwargs={'slug': self.slug})
 ```
+
+3. **Running Django Migrations**
+
+    - Once the models are defined in `models.py` we need to run the migrations. Running migrations in this context essentially means we are sort of running database migration changes. After migrations are completed, Django would reflect the expected changes in database schema. We esentailly run two commands `python3 manage.py makemigrations` and `python3 manage.py migrate`
+    - On running `makemigrations` command python files are created in migrations folder that describe the changes to be made to schema. Then `migrate` command would commit those changes to database (pre-configured in `settings.py` default is sqlite)

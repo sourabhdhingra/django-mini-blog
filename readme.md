@@ -59,7 +59,9 @@ We will solve the [Django Mini blog Assignment](https://developer.mozilla.org/en
         - posted_on: Date when comment as posted
         - edited_at: date when comment was edited by its commentor.
     
+   
     See Diagram Below:
+
     ![ERD](ERD.png)
 
     - A blogger has one-to-many relationship with BlogPost

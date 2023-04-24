@@ -1,1 +1,73 @@
-<mxfile host="Electron" modified="2023-03-25T14:53:46.344Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/20.8.16 Chrome/106.0.5249.199 Electron/21.4.0 Safari/537.36" etag="1SX3vSrP6WgEF8tzwc-H" version="20.8.16" type="device"><diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">7Vpdb+I4FP01vKxUlE9KH6GUXWlbbVVmNbNPyCUmserEyDED9NfvdWLnwwklS0lnRttqVMXX13Z87/E9J54O3Nt4/ztHm+iBBZgOHCvYD9zZwHFGYw9+S8MhN3juTW4IOQlyk10aFuQVK6OlrFsS4LTmKBijgmzqxhVLErwSNRvinO3qbmtG66tuUIgbhsUK0ab1KwlElFvHvlXa/8AkjPTKtqV6YqSdlSGNUMB2NRPeizlLhHrFR8xjlOBEQM8D4i+YD/y7SAi508nAmcO/tfQehoyFFKMNSYcrFoN5lYLLfI1iQmWYKxNN1USwnHs3cG85YyJ/ive3mMpU6TTk7zQ/0lvEgct5OwxYoAN9WUyCe9f58zDyntY8Dq5U7r8julXxnVIWhvkLQojEQcc93ZGYwiYG7nQVERrcowPbyoVTgVYvujWNGCevEBREocsGA3RzoWDkWjWPhRwJZmnlbJsEOFCDZFjVGNvTbfUuVjYpZy9F/h05Hqfg/6ijYRWme5QK/So64bI3QGmUrScbiJIwgecVjIa96wVuGWU8275rZT/QowKGucD7o5mwi/zCMcQsxoIfwGVfYDIfoo5gAb9dCWh7pGxRFcyuMiKF0LCYu0w8PKjc/wcc6DeqAAGwuiY8FcsExTgDvLUQnCThwBlBQOw8GFOKTrqg5wwbsvsLnLB65zPgbcNSeeYmEnuP8Dzwp/Zw+NvAn9V8q8OWS0jRcgmD9IoGXnVKKV6LRkITlgF5TSg1TOkGrWC6+2zUzDOwKJEmU0+gHk3UAoJtNNjQc4FQzgQSlTagQ8OwE4KOn9YmrBSM3K4osvpCkdOGIiMvOAkmkgbKkEci1sWirAIyZnhPxLfK8z/yeXjtq+ZsX+mbHXQjgZ18U/Nljeow2S7HZS09UDFA0KCfLkmBLbItX+EORwzqYYjfmjB3bKa5kle/Ja3axjFFgnyv76It1WqFR0YyhlNYdG7qxcn2DbTkG1WjqnxjTOR6xkQm7PJANCbKkFds+x0l7bqV27L68kluvZGb69bTPupalUa9cdu4jdsEEfQtztqKSIZH9mtJBKxkUtJ0s32mJI2WARJqthk8zQkGWVtzBD0sshC20yDoxhhnylP23+at0zz4v6fE/JS/nxN7U1aOe1lOPJfeziLTczlR197TpDjuSorjH0mKV6N6UXNNLutKilem9DfZtWdSdLwOaIR0az6CNBNxeMqix5K7sqdRAyqIrcD57gnw/IU9oORwVN7ZNUSeUHfQgK9pAnGQVFY/Elb9SFxA8NkX13anYVzopFbN/k4gu9cGkG/OBLLnG+rOpO++gew3gKxJ81Pc9SbufCPr3dVdf/w6alN32xQr8fZ3ekS5sWSp7x5KmadvHxreb8u3T0Vmnsyf+Zai+WH4LkX2S9xS6Hp5ksr0eTpJZbnj5zXFO4nM7YLGj1JkvSupS6CqV4HkXQpX3tivTeRZ/ofiymtT+hVenGxFNMz+d3CYUaSJuV1EBF4A0cj2jqNNHVGmzjkuO5oKyJBVdQHVFEjHxc8FFI07MtLUxk9OC+B6u67y2gRNrwXhFXNWVATomRN64vLhyhpallcvEmPvRJXIWo2PtzM+AruXm5Nsp0/Jz1+XrHpd8sZn1iXfmMg1J+q7Ln0438UoCf7KdbMsPW0dXS4muiq6X+AWIkf9D7yFGBufkdfnijfjXs672C0ENMs/zcjdyz+nce/+BQ==</diagram></mxfile>
+<mxfile host="Electron" modified="2023-04-24T07:08:19.792Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.1 Chrome/112.0.5615.87 Electron/24.1.2 Safari/537.36" etag="h9GcPaYXBZ4dBR3CGOB9" version="21.2.1" type="device">
+  <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
+    <mxGraphModel dx="1026" dy="658" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-9" value="Blogger" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="110" y="210" width="160" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-10" value="+about: Text&#xa;+user: User&#xa;&#xa;+__str__:String" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="SaylkSAdL32Ky64Rfrmd-9" vertex="1">
+          <mxGeometry y="30" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-20" value="" style="endArrow=none;html=1;rounded=0;exitX=-0.012;exitY=0.588;exitDx=0;exitDy=0;exitPerimeter=0;" parent="SaylkSAdL32Ky64Rfrmd-9" source="SaylkSAdL32Ky64Rfrmd-10" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="150" as="sourcePoint" />
+            <mxPoint x="160" y="77" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-17" value="BlogPost" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="330" y="60" width="160" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-18" value="+title: String&#xa;+author: Blogger[1]&#xa;+publish_date: Date&#xa;+last_updated: Date&#xa;+content: Text&#xa;&#xa;+__str__:String" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="SaylkSAdL32Ky64Rfrmd-17" vertex="1">
+          <mxGeometry y="30" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-23" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" parent="SaylkSAdL32Ky64Rfrmd-17" source="SaylkSAdL32Ky64Rfrmd-18" target="SaylkSAdL32Ky64Rfrmd-18" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-60" y="300" as="sourcePoint" />
+            <mxPoint x="-10" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-24" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="SaylkSAdL32Ky64Rfrmd-10" target="SaylkSAdL32Ky64Rfrmd-18" edge="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="370" y="390" as="sourcePoint" />
+            <mxPoint x="450" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-25" value="Comment" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;strokeColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="550" y="260" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-26" value="+commentor: User[1]&#xa;+on_blogpost: BlogPost[1]&#xa;+content: Text&#xa;+posted_on: Date&#xa;+edited_at: Date&#xa;&#xa;&#xa;+__str__:String" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="SaylkSAdL32Ky64Rfrmd-25" vertex="1">
+          <mxGeometry y="30" width="160" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-27" value="" style="endArrow=none;html=1;rounded=0;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" parent="SaylkSAdL32Ky64Rfrmd-25" source="SaylkSAdL32Ky64Rfrmd-26" target="SaylkSAdL32Ky64Rfrmd-26" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="150" as="sourcePoint" />
+            <mxPoint x="340" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-37" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="SaylkSAdL32Ky64Rfrmd-26" edge="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="490" y="150" as="sourcePoint" />
+            <mxPoint x="485" y="405" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-44" value="+user: Auth.Model.User" style="whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;fontStyle=0;startSize=30;rounded=1;strokeWidth=2;shadow=0;dashed=0;" parent="1" vertex="1">
+          <mxGeometry x="365" y="430" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-46" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERzeroToMany;endFill=1;rounded=0;entryX=-0.004;entryY=0.84;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="SaylkSAdL32Ky64Rfrmd-44" target="SaylkSAdL32Ky64Rfrmd-26" edge="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="400" y="480" as="sourcePoint" />
+            <mxPoint x="500" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SaylkSAdL32Ky64Rfrmd-47" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERmandOne;startArrow=ERmandOne;rounded=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="SaylkSAdL32Ky64Rfrmd-10" target="SaylkSAdL32Ky64Rfrmd-44" edge="1">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="380" y="270" as="sourcePoint" />
+            <mxPoint x="360" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

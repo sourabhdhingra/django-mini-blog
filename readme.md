@@ -28,7 +28,7 @@ MVT stands for Model View Template. Now this is a standard design which is used 
 Now Django is a MVT framework written in python. To develop in Django you must know that Django provides Model, View and Templates as python files namely models.py, views.py, HTML files as templates.
 
 - **models.py** - You write your models here. Django provides an inbuilt class that one needs to extend. The class is `django.db.models.Model`
-- **views.py** - this python file defines the Views (functions or class based) that would be called upon a particular request. View functions can either use default templates or can be configured to call a particular template.
+- **views.py** - this python file defines the Views (functions or class based) that would be called upon a particular request. View functions can either use default templates or can be configured to call a particular template along with the data stored in model.
 - **urls.py** - this file provides the mapping between URL request hit and corresponding view function.
 - **templates** - these are HTML files which are saved with Django template language to support dynamic content generation. Basically a view function takes care of passing the appropriate context to the template and using the context we can display the information in HTML using Django template syntax.
 
@@ -37,3 +37,31 @@ See the diagram below.
 ![Django Basic workflow](django_basic_workflow.png)
 
 To know more about Django read here on [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Introduction).
+
+
+## Solving the Django Mini Blog Assignment 
+
+We will solve the [Django Mini blog Assignment](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/django_assessment_blog) mentioned on MDN Web Docs. It is required that you must have gone through the [tutorial](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Tutorial_local_library_website) first and should have learned how to set up the Django with python virtual environments. It is assumed that you already know python. The aim of this project and illustrative readme file is to directly present you the solutions of the common problems that one would come across with development in django.
+
+1. **Figuring out the schema and entity relationship diagram** - The first step is to design the database schema. In django you would use the models.py that would create the required schema. There is no need to decide on the database software to be used first. Django would take care of reflecting the ERD(Entity Relationship Diagram) described through models in models.py in whatever database is configured for Django e.g mysql, postgresql etc. Lets go through the entities involved.
+    
+    - _BlogPost_: Everyblog post should have a title, an author who actually created that blogpost, dates when blogpost was published and last edited, content of the blogpost and comments by the users who are logged in.
+        - Every blogpost would have only one author which implies a many-to-one relatioship.
+
+    - _Blogger_: Every blogger who is able to create a blogpost should have a first name and last name and other user details. These details can be stored by mapping a Django inbuilt user as a foreign key.
+        - about: text field that contains some biographical information about the blogger.
+        - user: django auth.user mapped as foreign key with blogger
+    
+    - _Comment_: A user can comment on any blogpost and only the commentor can edit the comment. Comment would be posted on a particular date and could be edited anytime:
+        - commentor: mapped with django inbuilt user as foreign key
+        - on_blogpost: blogpost on which user has commented
+        - content: what is commented on?
+        - posted_on: Date when comment as posted
+        - edited_at: date when comment was edited by its commentor.
+    
+    See Diagram Below:
+    ![ERD](ERD.png)
+
+    - A blogger has one-to-many relationship with BlogPost
+    - A Comment has many-to-one relationship with user
+    - A blogger has one-to-one relatioship with Django inbuilt user

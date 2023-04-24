@@ -98,3 +98,21 @@ class Blogger(models.Model):
 
     - Once the models are defined in `models.py` we need to run the migrations. Running migrations in this context essentially means we are sort of running database migration changes. After migrations are completed, Django would reflect the expected changes in database schema. We esentailly run two commands `python3 manage.py makemigrations` and `python3 manage.py migrate`
     - On running `makemigrations` command python files are created in migrations folder that describe the changes to be made to schema. Then `migrate` command would commit those changes to database (pre-configured in `settings.py` default is sqlite)
+
+4. **Creating a view function and mapping a template**
+
+    - In `views.py` we write functions or class-based views that would render and return a certain template. We map the view written in `views.py` to a specific url pattern that a browser could request. When the specific request is made Django knows what to show to the user based upon view-to-url mapping.
+    - As a simple example lets consider a home page that would be shown once a user hits the domain name only.
+        ```
+        urlpatterns = [
+        path('', views.home, name='home'),
+        ]
+        ```
+    - Now `views.home` is a function defined in `views.py`. Check below code snippet. It takes request as an argument.
+        ```
+        from django.shortcuts import get_object_or_404, render
+        
+        def home(request):
+            return render(request, 'home.html')
+        ```
+    - Now anytime the url `http://127.0.0.1:8000/` would be hit it would load the HTML page `home.html`

@@ -161,3 +161,19 @@ class Blogger(models.Model):
 
     - In Django we can create a base template that can be extended with other templates. Usually sections that would remain unchanged are put in the base template and the content block that is likey to change with childern template is programmed with the help of Django template language. Refer [link1](https://docs.djangoproject.com/en/4.2/ref/templates/language/) and [link2](https://www.w3schools.com/django/django_template_variables.php)
     - Base template for this project can be checked [here](blog/templates/base_generic.html)
+    - Extending base template to create `blogger_list.html`. Use syntax at the top `{% extends 'base_generic.html' %}` to extend. In base template you can define blocks as ` {% block content%}{% endblock %}` and you can override the block in child template using name of the block.  Below is how the blogger_list template looks.
+
+        ```
+        {% extends 'base_generic.html' %}
+        {% block content %}
+        <div>
+            <h1>Meet our bloggers!</h1>
+            <ul>
+                {% for blogger in blogger_list %} 
+                <li><a href="{% url 'blogger-detail' blogger.slug %}">{{blogger.user.first_name}} {{blogger.user.last_name}}</a> </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endblock %}
+        ```
+    - Note: We have used slugs in place of primary keys. The reason is it is not secure to expose the primary keys to the end user as they are auto-incremented and can easily be guessed.

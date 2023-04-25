@@ -160,7 +160,9 @@ class Blogger(models.Model):
 8. **Usecase 2: Dealing with the templates and resuing them**
 
     - In Django we can create a base template that can be extended with other templates. Usually sections that would remain unchanged are put in the base template and the content block that is likey to change with childern template is programmed with the help of Django template language. Refer [link1](https://docs.djangoproject.com/en/4.2/ref/templates/language/) and [link2](https://www.w3schools.com/django/django_template_variables.php)
+
     - Base template for this project can be checked [here](blog/templates/base_generic.html)
+
     - Extending base template to create `blogger_list.html`. Use syntax at the top `{% extends 'base_generic.html' %}` to extend. In base template you can define blocks as ` {% block content%}{% endblock %}` and you can override the block in child template using name of the block.  Below is how the blogger_list template looks.
 
         ```
@@ -177,3 +179,31 @@ class Blogger(models.Model):
         {% endblock %}
         ```
     - Note: We have used slugs in place of primary keys. The reason is it is not secure to expose the primary keys to the end user as they are auto-incremented and can easily be guessed.
+
+9. **Usecase 3: Showing details of a particular record**
+
+    - Clickable links in the list of data from listview which opens the detail of the instance.
+
+    - To have the detail of a particular model entry Django provides `django.views.generic.DetailView`
+
+    - Similarily to ListView we need to create an HTML page `<model>_detail.html`. In our case we will create `blogger_detail.html` by extending the base template.
+
+    - The template would be mapped to detail view by default similarily to what we did in the case of list view.
+
+    - Check the detail page [blogger_detail.html](blog/templates/blog/blogger_detail.html), detail view [BloggerDetail](blog/views.py) and mapping with [urls.py](blog/urls.py)
+
+10. **Usecase 4: Mapping detail view templates as hyperlinks in ListView**
+    - To create hyperlink in HTML we use anchor tag. In HTML with the help of django template syntax we populate the value of `href` attribute using the `url` keyword.
+
+    - Here is what we use `<a href="{% url 'blogger-detail' blogger.slug %}">{{blogger.user.first_name}} {{blogger.user.last_name}}</a>`. The `url` keyword accepts the `name` of the `urlpattern` mentioned in the `urls.py` as `path('blogger/<slug:slug>', views.BloggerDetail.as_view(), name='blogger-detail'),`. In template we use the `name` value to tell `url` keyword which path we are interested in creating. Then another argument passed to `url` is `blogger.slug` to identify which object's detail we want to refer to.
+
+    - Remember we have used slugs but as a beginner you can start with ids.
+
+    - Also notice in `blogger_list.html` Django by default sets a variable in the template context with format `model_list` which translates to `blogger_list` in our case.
+
+    - Then using the Django For-Loop we iterate through the blogger list, access the blogger iterable and show an anchor based hyperlink using iterable. Check code below:
+        ```
+        {% for blogger in blogger_list %} 
+        <li><a href="{% url 'blogger-detail' blogger.slug %}">{{blogger.user.first_name}} {{blogger.user.last_name}}</a> </li>
+        {% endfor %}
+        ```

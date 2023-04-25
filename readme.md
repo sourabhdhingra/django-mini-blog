@@ -207,3 +207,57 @@ class Blogger(models.Model):
         <li><a href="{% url 'blogger-detail' blogger.slug %}">{{blogger.user.first_name}} {{blogger.user.last_name}}</a> </li>
         {% endfor %}
         ```
+
+10. **Usecase 5: Taking care of DateFields which provide valuable information about the resource**
+    - Many a times we require resource to have the information when it was first created and when it was last updated. Not only this information is required to debug using the data in production when a production incident happens but also it provides the important historical information to the data analysts these days using which they can comment on the user behaviour.
+    - Generally table have one column `created_at` which tells the date time when the resource was created for the first time. At this time create_at and updated_at have the same value.
+    - Then we have another column `updated_at` which gets updated with date time everytime a resource is updated.
+    - In Django we can achieve the desired functionality by passing certain arguments to DateFied while defining fields at model level.
+    - `auto_now_add=True` will set the DateField column value to `timezone.now()` only when the instance is created. We would not like the value for the column to change so we can set `editable=False`. `auto_now_add` value is set only when a resource is added then afterwards it is no longer affected.
+        ```
+        publish_date = models.DateTimeField(editable=False, auto_now_add=True)
+        ```
+    - `auto_now=True` will set the DateField column value to be updated with timezone.now() everytime the instance is saved i.e when the save method is called. Likewise we would not like this filed to be edited by the user but only be affected by the system and we should set `editable=False`
+        ```
+        last_updated = models.DateTimeField(editable=False, auto_now=True)
+        ```
+
+11. **Usecase 6: Supporting CRUD operations in Django - Create**
+    - When it comes to list of possible operations while interacting with a website a user mostly perform 4 basic operations. Create a resource such as publishing a blogpost. Update a resource such as editing profile or updating an already existing blogpost. Read operations such as check other blogposts. Delete operations in form of deleting commments etc. CRUD stands for Create, Read, Update, Delete.
+
+    - Now Read operation can already be taken care by ListView and DetailView. We need to think of the create, update and delete. Let's take `create` operation first.
+
+    - Django provides `django.views.generic.edit.CreateView` which can be inherited to define a custom View class. 
+
+    - In custom class-based view we can override the value of inherited class members to achieve desired functionality. One member is `model` which is assgined your model class that you want to create e.g `model = models.BlogPost`.
+
+    - Another field is `fields` which accept a list of fields to be shown on the form rendered by Django create view. `CreateView` will offer a form created using the fields available by the model mapped using `model = models.BlogPost`. If all fields are to be included then we can use `fields='__all__'`
+
+    - `CreateView` extends few classes and mixins so that it provides you the attributes from a `form` class as it is supposed to be. To create a resource CreateView should be able to offer a form which a user can fill in and submit from the browser and a resource can be created using the details submitted. Another function that can be overriden from `CreateView` is `form_valid` which is called after valid details are submitted via a form and before `save` method is called. Overriding this method provides you a space where you can do the essential mapping and tweaks with the model object you intend to save.
+
+    - Let us understand the above point with an example. While creating a blogpost it is essential to map the blogger of the blogpost with the logged in user. First we need to fetch the blogger with the logged in user. That we can get through `self.request.user` where `self` is available within the overriden function. `request` is the ongoing request and `user` gives you the logged in django `auth.user`. 
+
+    - We fetch the `blogger` using the `user` available and assign it to the `blogpost.blogger`
+        ```
+        blogpost.author = models.Blogger.objects.get(user=self.request.user)
+        ```
+
+    - To fetch the instance on the left side above we can either use `blogpost = form.save(commit=False)` or `blogpost = form.instance`.
+
+    - Then after doing the essential modifications/mappings with the object itself we need to save and redirect. It is obvious that when a resource is created after successful save we need to redirect user to some proper page usually the detail page of that resource. This can be taken care by overriding another function `get_success_url`.
+
+    - We can create a redirect url using `reverse_lazy` or `reverse`. `reverse_lazy` is preferred because it would not break if `name` of the urlpattern does not exist yet. It is same as using `pass` keyword in python when we do not want to provide any definition yet to function or a class. The `reverse_lazy` takes argument first `name` of the url pattern defined in `urls.py`, then a list of `kwargs`. This could be returned by the function `get_success_url`. 
+
+    - Check class `BlogPostCreate` in [views.py](blog/views.py)
+
+
+
+12. **Usecase 7: Supporting CRUD operations in Django - Update**
+
+13. **Usecase 8: Supporting CRUD operations in Django - Delete**
+
+14. **Usecase 9: Adding support for User Registration**
+
+15. **Usecase 10: Using inbuilt Authentication to support login, logout, password change etc**
+
+

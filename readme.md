@@ -157,7 +157,7 @@ class Blogger(models.Model):
     - In `urls.py` view should be mapped to a particular url pattern. Append this `path('bloggers/', views.BloggerList.as_view(), name='bloggers'),` to `urlpatterns` list. Notice we map the view function in url pattern and to do that with a class based view we use `as_view()` function.
     - By default template page this list view picks from is `blog\templates\blog\blogger_list.html`. Format of the name is `model_list.html`. Therefore we need to create the template `blogger_list.html`.
 
-8. **Usecase 2: Dealing with the templates and resuing them**
+8. **Usecase 2: Dealing with the templates and reusing them**
 
     - In Django we can create a base template that can be extended with other templates. Usually sections that would remain unchanged are put in the base template and the content block that is likey to change with childern template is programmed with the help of Django template language. Refer [link1](https://docs.djangoproject.com/en/4.2/ref/templates/language/) and [link2](https://www.w3schools.com/django/django_template_variables.php)
 
@@ -250,9 +250,23 @@ class Blogger(models.Model):
 
     - Check class `BlogPostCreate` in [views.py](blog/views.py)
 
-
-
 12. **Usecase 7: Supporting CRUD operations in Django - Update**
+    
+    - When a resource is created then a user would like to update that resource in the future. Djagno provides `django.views.generic.edit.UpdateView`.
+
+    - Similar to other edit views it provides two fields - `model` and `fields`. Both are mandatory fields. Their usage is similar to the one described in `CreateView`.
+
+    - We can also override `form_valid` function if required. In most cases no further mapping is required during update at the resource besides the content update therefore usage of `form_valid` function does not arise.
+
+    - By default the template name is supposed to use the suffix `_form` which is same as that used for `CreateView`. Usually one does not have to create a separate update form. But if a need arises we can override the suffix value and create an HTML page accordignly: `template_name_suffix = "_update_form"` and page name would be `blopost_update_form.html`
+
+    - Either we can define success url by overriding `get_success_url`  or we can do it in less code by defining the absoulute url at model level. Go to the model class and override function `get_absolute_url` returning the detail page url for the instance.
+        ```
+        def get_absolute_url(self) -> str:
+            return reverse_lazy('blogpost-detail', kwargs={'slug': self.slug})
+        ```
+
+    - Like every other view it has to be mapped to a particular url pattern
 
 13. **Usecase 8: Supporting CRUD operations in Django - Delete**
 

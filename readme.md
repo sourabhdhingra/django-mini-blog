@@ -283,7 +283,25 @@ class Blogger(models.Model):
 
 14. **Usecase 9: Adding support for User Registration**
 
+    - When builiding a website we want visitors to register themsleves so that they can later login to the website and are allowed to do certain operations. This requires a user registration system in place. We can use the inbuilt django forms.
+
+    - We have not mentioned about Django forms till yet. Like `views` Django offers `django.forms` as well. We create a file `forms.py` in which we can define class based forms by extending `forms.ModelForm`
+
+    - For Registration form we can extend `django.contrib.auth.forms.UserCreationForm` to create `RegisterForm`. Check [forms.py](blog/forms.py)
+
+    - In `views.py` we can create a `RegisterFormView` class extending `CreateView`. In the class definition we can tell which form to use by assigning value to `form_class` member : `form_class = forms.RegisterForm` 
+
+    - Since this is not any inbuilt Djagno view we need to tell the view which tempalte to use using `template_name = 'register.html'`
+
+    - Template would be kept at folder called templates under blog e.g `blog/templates/register.html`
+
+    - Notice the difference between the location of `model_detail/list` pages and `register.html` pages. Pages for default generic views are expected under a separate folder with name same as that of the djagno app inside `templates` directory i.e `blog\templates\blog...`. Where as `register.html` is kept directly under `templates`.
+
+    - Like always a view needs to be mapped with a url pattern. Check out the url pattern with name `register` in [urls.py](blog/urls.py)
+
 15. **Usecase 10: Using inbuilt Authentication to support login, logout, password change etc**
+
+    - 
 
 16. **Usecase 11: Using an existing ListView to show a list of all entries and filtered entries**
 

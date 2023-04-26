@@ -266,12 +266,25 @@ class Blogger(models.Model):
             return reverse_lazy('blogpost-detail', kwargs={'slug': self.slug})
         ```
 
-    - Like every other view it has to be mapped to a particular url pattern
+    - Like every other view it has to be mapped to a particular url pattern. Since we are updating a particular resource url patter would need some identifier to identify the resource under action. We prefer `slug` for this case.
 
 13. **Usecase 8: Supporting CRUD operations in Django - Delete**
+
+    - Needs to be defined like other edit views. `model` is a mandatory assignment. `fields` is not required because you do not need to show a form for accepting the values of model-fields. Infact you need a form that would only ask the user for confirmation to delete.
+
+    - Therefore the suffix for the template is `_confirm_delete`. Example - `blogpost_confirm_delete.html`.
+
+    - Like `update` we need something to identify the resource we want to delete. Hence we need to construct the url pattern accordingly and map with the delete view. 
+        ```
+        path('blogpost/<slug:slug>/delete', views.BlogPostDelete.as_view(), name='blogpost-delete'),
+        ```
+
+    - After delete we would want the user to redirect to list of existing resources. For this we either use static `success_url` or override function `get_success_url`.
 
 14. **Usecase 9: Adding support for User Registration**
 
 15. **Usecase 10: Using inbuilt Authentication to support login, logout, password change etc**
+
+16. **Usecase 11: Using an existing ListView to show a list of all entries and filtered entries**
 
 

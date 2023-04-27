@@ -327,6 +327,8 @@ class Blogger(models.Model):
         # default = /accounts/profile
         LOGIN_REDIRECT_URL = 'home'
         ```
+    
+    - To use above url patterns successully we need to ensure that `login.html` and `logged_out.html` pages are available in the `templates\registration` folder. The folder `regsitration` need to be created first.
 
 16. **Usecase 11: Using an existing ListView to show a list of all entries and filtered entries**
     
@@ -360,4 +362,4 @@ class Blogger(models.Model):
 
     - In the function first we get the queryset from super function. Then we check if `username` was passed in the `self.kwargs`. If passed we fetch that value and use that value to find the mapped user. Once the mapped user is found we use that user to find the linked blogger. Then using the `found_blogger` we get a queryset that returns the blogposts whose author is the `found_blogger`. We use Djagno Query Language to query model data. Refer these two links [link1](https://www.w3schools.com/django/django_queryset.php) and [link2](https://www.javatpoint.com/django-orm-queries)
 
-    - 
+17. 

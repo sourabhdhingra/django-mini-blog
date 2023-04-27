@@ -322,6 +322,33 @@ class Blogger(models.Model):
     - If user is logged in then we need to show the logout link else we should show login link. We can check this condition using `{% if user.is_authenticated %}` in template itself. Check [base_generic.html](blog/templates/base_generic.html)
 
 16. **Usecase 11: Using an existing ListView to show a list of all entries and filtered entries**
-    - 
+    
+    - In our Django Blog assignment we need to show list of blogposts in 2 ways. First is the list of all blogposts available that a vistor can browse through. Second is the list of the blogposts created by the logged in blogger itself.
 
+    - To show the list of all blogposts we can use the simple listview mechanism. But to show the list of blogposts created by the logged in blogger we need to have a fitlering mechanism.
 
+    - Showing the list of all blogposts would need url pattern `path('blogposts/', views.BlogPostList.as_view(), name='blogs'),`. 
+    
+    - To show the list of selected blogposts we need to provide another link to user which should pass on the `username` information based on which the listview can provide the filtered result. 
+
+    - We will use the url pattern for desired link as `path('blogposts/<str:username>', views.BlogPostList.as_view(), name='user-blogs'),`.
+
+    - Now when `user-blogs` is used in the template we ensure that we pass the username as the kwarg to it. 
+        ```
+        <li><a href="{% url 'user-blogs' userlinked_blogger.user.username %}">See your blogposts!</a> </li>
+        ```
+    
+    - Next we need to override the function `get_queryset` in our class that extended ListView. Check `BlogPostList` in [views.py](blog/views.py)
+        ```
+        def get_queryset(self):
+            queryset = super().get_queryset()
+            if 'username' in self.kwargs:
+                blogger_name = self.kwargs['username']
+                if blogger_name:
+                    found_user = models.User.objects.get(username=blogger_name)
+                    found_blogger = models.Blogger.objects.get(user=found_user)
+                    queryset =  models.BlogPost.objects.filter(author=found_blogger).order_by('-publish_date')
+            return queryset
+        ```
+
+    - In the function first we get the queryset from super function. Then we check if `username` was passed in the `self.kwargs`. If passed we fetch that value and use that value to find the mapped user. Once the mapped user is found we use that user to find the linked blogger. Then using the `found_blogger` we get a queryset that returns the blogposts whose author is the `found_blogger`. We use Djagno Query Language to query model data. Refer these two links [link1](https://www.w3schools.com/django/django_queryset.php) and [link2](https://www.javatpoint.com/django-orm-queries)

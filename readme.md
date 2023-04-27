@@ -301,8 +301,27 @@ class Blogger(models.Model):
 
 15. **Usecase 10: Using inbuilt Authentication to support login, logout, password change etc**
 
-    - 
+    - We can use the inbuilt set of urls and pages available `django.contrib.auth.urls`. 
+        ```
+        path('accounts/', include('django.contrib.auth.urls')),
+        ```
+    - This provides the below urlpatterns. Django provides these as admin pages.          
+        1. accounts/login/ [name='login']
+        2. accounts/logout/ [name='logout']
+        3. accounts/password_change/ [name='password_change']
+        4. accounts/password_change/done/ [name='password_change_done']
+        5. accounts/password_reset/ [name='password_reset']
+        6. accounts/password_reset/done/ [name='password_reset_done']
+        7. accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
+        8. accounts/reset/done/ [name='password_reset_complete']
+    
+    - We can include the above urls using `path('accounts/', include('django.contrib.auth.urls')),` in `<project>.urls.py`.
+
+    - Then in template we can provide anchor links to redirect the user to login.logout pages.
+
+    - If user is logged in then we need to show the logout link else we should show login link. We can check this condition using `{% if user.is_authenticated %}` in template itself. Check [base_generic.html](blog/templates/base_generic.html)
 
 16. **Usecase 11: Using an existing ListView to show a list of all entries and filtered entries**
+    - 
 
 

@@ -321,6 +321,13 @@ class Blogger(models.Model):
 
     - If user is logged in then we need to show the logout link else we should show login link. We can check this condition using `{% if user.is_authenticated %}` in template itself. Check [base_generic.html](blog/templates/base_generic.html)
 
+    - After login through inbuilt django feature it redirects to the profile page. Either we can fulfill this need by creating profile section or we can chose to redirect to another page. This can be achieved by overriding `LOGIN_REDIRECT_URL`. Check in [settings.py](miniblog/settings.py)
+        ```
+        # Redirect url after successful login
+        # default = /accounts/profile
+        LOGIN_REDIRECT_URL = 'home'
+        ```
+
 16. **Usecase 11: Using an existing ListView to show a list of all entries and filtered entries**
     
     - In our Django Blog assignment we need to show list of blogposts in 2 ways. First is the list of all blogposts available that a vistor can browse through. Second is the list of the blogposts created by the logged in blogger itself.
@@ -352,3 +359,5 @@ class Blogger(models.Model):
         ```
 
     - In the function first we get the queryset from super function. Then we check if `username` was passed in the `self.kwargs`. If passed we fetch that value and use that value to find the mapped user. Once the mapped user is found we use that user to find the linked blogger. Then using the `found_blogger` we get a queryset that returns the blogposts whose author is the `found_blogger`. We use Djagno Query Language to query model data. Refer these two links [link1](https://www.w3schools.com/django/django_queryset.php) and [link2](https://www.javatpoint.com/django-orm-queries)
+
+    - 

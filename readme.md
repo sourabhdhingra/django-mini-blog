@@ -436,7 +436,25 @@ class Blogger(models.Model):
         ```
 
 21. **Usecase 16: Sorting the data at model level**
-
+    
+    - While defining the model we can also define the way data is supposed to be stored in the database with its creation. We use `Meta` class to decide the ordering. Check `Blogpost` model.
+        ```
+        class Meta:
+            ordering = ['-publish_date']
+        ```
+    
+    - Now when we display the data for this model using a listview data would default be in a descending order on `publish_date`. But it is advisable to ensure it at the list level to perform the ordering using a queryset and return the data. For e.g when blogposts are viewed for a specific user then we need to repeat the logic of ordering the results on the basis of `publish_date`. Check `get_queryset` in blogpost listview. We have added support where logged in user tries to access his own blogs.
+        ```
+        def get_queryset(self):
+            queryset = super().get_queryset()
+            if 'username' in self.kwargs:
+                blogger_name = self.kwargs['username']
+                if blogger_name:
+                    found_user = models.User.objects.get(username=blogger_name)
+                    found_blogger = models.Blogger.objects.get(user=found_user)
+                    queryset =  models.BlogPost.objects.filter(author=found_blogger).order_by('-publish_date')
+            return queryset
+        ```
     
 
 22. **Usecase 17: Sharing context through context processors**

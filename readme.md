@@ -459,6 +459,27 @@ class Blogger(models.Model):
 
 22. **Usecase 17: Sharing context through context processors**
 
+    - In our project we are dealing with a logged in user that is essentially a django auth user provided as inbuilt. Then we have mapped this user one-to-one with a blogger. Whenever a user logs in we would want to get access to the corresponding blogger object. Using this blogger object we can write code to show links in our templates. For e.g to show blogger detail page link in `base_generic.html`
+
+    - Since the associated blogger with user after log in if found plays a key role in our templates it is vital for this object to be available in template context. For such use cases we use context processor.
+
+    - We create a file `context_processors.py` in which we write our functions returning required objects and values.
+
+    - We write a function to return a userlinked blogger if a user is succesfully logged in. Check [context_processors.py](blog/context_processors.py)
+
+    - The function filters the blogger based upon the authenticated user set in a key value pair and returns it.
+
+    - This object is accessible using the key name of the variable `userlinked_blogger` in template. Based on the availablity we write the logic to show a link to create a blogger account or show the links to create a blogpost etc. Check below code in `base_generic.html`
+        ```
+        {% if userlinked_blogger is None%}
+                    <li><a href="{% url 'blogger-create' %}">About yourself!</a> </li>
+        {% else %}
+            <li><a href="{% url 'blogger-detail' userlinked_blogger.slug %}">About yourself!</a> </li>
+            <li><a href="{% url 'blogpost-create' %}">Create a blogpost!</a> </li>
+            <li><a href="{% url 'user-blogs' userlinked_blogger.user.username %}">See your blogposts!</a> </li>
+        {% endif %}
+        ```
+
 23. **Usecase 18: Using slugs to avoid usage of primary keys and improved searchability**
 
 24. **Usecase 19: Customising 403 and 404 templates**

@@ -480,7 +480,24 @@ class Blogger(models.Model):
         {% endif %}
         ```
 
-23. **Usecase 18: Using slugs to avoid usage of primary keys and improved searchability**
+23. **Usecase 18:Adding cancel operation to the delete forms**
 
-24. **Usecase 19: Customising 403 and 404 templates**
+    - It is a good thing to have a cancel button in delete forms. If a user cancels the delete operation on `confirm_delete` page then we need to redirect user to some appropriate page.
+
+    - __Approach__: Add cancel link and show it as button using CSS. Now delete template by default has an object variable in its context which we can use to redirect the user back to its detail page. see code below in `blogger_confirm_delete.html`
+        ```
+        <button><a href="{{ object.get_absolute_url }}" style="text-decoration: none; color: black;">Cancel</a></button>
+        ```
+    
+        - We need to ensure that `get_absolute_url` function is overriden and well-defined at model level.
+
+        - In our assignment `Delete` button is shown at the detail page itself so it makes sense to redirect the user to one step back.
+    
+    - Check out all confirm delete pages to see the code.
+
+24. **Usecase 19: Using slugs to avoid usage of primary keys and improved searchability**
+
+25. **Usecase 20: Customising 403 and 404 templates**
+
+26. 
 

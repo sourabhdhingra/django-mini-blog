@@ -424,7 +424,20 @@ class Blogger(models.Model):
 
 20. **Usecase 15: Sorting the data at template level**
 
-21. **Usecase 16: Sorting the data at view level**
+    - Let us take an example where this could happen. When we open a detail page for blogger we would want to see all the blogposts that blogger created. We would pefer the latest posts links to be shown at the top.
+
+    - For this usecase we can use [django filter](https://www.w3schools.com/django/django_ref_filter.php) `dictsortreversed`. 
+
+    - First thing to note is we have access to list of foreign key field mappings using a python set. Using this `set` and `dictsortreversed` we can get a list of values sorted in reverese order on the basis of a particular column. In this case it would be publish_date.
+        ```
+        {% for blogpost in blogger.blogpost_set.all|dictsortreversed:"publish_date" %}
+                <li><a href="{% url 'blogpost-detail' blogpost.slug %}">{{blogpost.title}}</a> ({{blogpost.publish_date}})</li>
+        {% endfor %}
+        ```
+
+21. **Usecase 16: Sorting the data at model level**
+
+    
 
 22. **Usecase 17: Sharing context through context processors**
 

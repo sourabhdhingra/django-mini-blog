@@ -362,4 +362,30 @@ class Blogger(models.Model):
 
     - In the function first we get the queryset from super function. Then we check if `username` was passed in the `self.kwargs`. If passed we fetch that value and use that value to find the mapped user. Once the mapped user is found we use that user to find the linked blogger. Then using the `found_blogger` we get a queryset that returns the blogposts whose author is the `found_blogger`. We use Djagno Query Language to query model data. Refer these two links [link1](https://www.w3schools.com/django/django_queryset.php) and [link2](https://www.javatpoint.com/django-orm-queries)
 
-17. 
+17. **Usecase 12: Restricting operations only for logged in users**
+    
+    - More often we want users to be able to access certain web pages only when they are logged in. Django python offers a useful mixin called `LoginRequiredMixin`. Mixins are special python classes that can be extended to involve special behaviours. Django package `django.contrib.auth.mixins` provides a whole lot of mixins such as `PermissionRequiredMixin` or `UserPassesTestMixin`. 
+
+    - Knowing how to use these mixins can pretty much help solve all the possible usecases of restricting authorization to a user based on certain criteria.
+
+    - `LoginRequiredMixin` when extended by a view ensure that a user must be logged in for that view to function. If not used would be redirected to perform login first.
+
+    - As an example we want user to be able to see blogposts without login but same user should be restricted to view list of bloggers if not logged in.
+    Hence we extend bloggerlist view with LoginRequiredMixin. We need to take care of the order in which Mixin is imported. `LoginRequiredMixin` should be the first class imported before the `generic.listview`. Check in `views.py`
+
+18. **Usecase 13: Allowing certain views only when a user passes a certain condition**
+
+    - 
+
+19. **Usecase 14: Implementing pagination for listviews**
+
+20. **Usecase 15: Sorting the data at template level**
+
+21. **Usecase 16: Sorting the data at view level**
+
+22. **Usecase 17: Sharing context through context processors**
+
+23. **Usecase 18: Using slugs to avoid usage of primary keys and improved searchability**
+
+24. **Usecase 19: Customising 403 and 404 templates**
+

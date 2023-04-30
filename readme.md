@@ -375,7 +375,11 @@ class Blogger(models.Model):
 
 18. **Usecase 13: Allowing certain views only when a user passes a certain condition**
 
-    - 
+    - In many cases we want a view to function when the user accessing that view passes a certain test criteria. Example - A blogger should only be able to update his own created blogposts and not others, a user should be edit/delete only his or her comments and not others'.
+
+    - For such use cases we can use `UserPassesTestMixin`. Extending this mixin would let us override a function called `test_func` where we can return True/False depending on a certain conditional test. This means if condition passes the test function passes returning True allowing the view to operate successfully.
+
+    - Check update and delete views of Blogpost, Blogger, Comment in `views.py` to understand the usage with help of an example.
 
 19. **Usecase 14: Implementing pagination for listviews**
 

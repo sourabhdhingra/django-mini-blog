@@ -383,6 +383,45 @@ class Blogger(models.Model):
 
 19. **Usecase 14: Implementing pagination for listviews**
 
+    - When data to show on a page increases we want to paginate pages to avoid long scrolls. Django provides the capability in `listview` by default. Remember one thing about Django that it is famously known as a framework with batteries included for a reason. We use the field `paginate_by` to govern the number of records to be shown per page.
+
+    - When this field is used in a view, that view automatically sends a `page_obj` in context to the template. Using that object we can use template language to support pagination in the html template. 
+
+    - In `base_generic.html` we define a pagination block using this `page_obj`. Check code below:
+        ```
+        % block pagination %}
+            {% if page_obj %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            {% endif %}
+        {% endblock %}
+        ```
+    
+    - If `paginate_by` is used then `page_obj` would exist and pagination logic should kick in. Hence the if logic.
+
+    - If we are on a page other than first page and there are more than one pages, then it makes sense to show links to go to the first page and previous page. Previous page number can be accessed as `page_obj.previous_page_number`
+
+    - `page_obj.number` shows the current page number and `page_obj.paginator.num_pages` holds the value of total number of pages created with the help of value of `paginate_by`.
+
+    - Inbuilt css is provided by django to style the pagination already. See the usage of `class="current"` and c`lass="pagination"`
+
+    - Checkout the link [paginating-a-listview](https://docs.djangoproject.com/en/4.2/topics/pagination/#paginating-a-listview).
+
 20. **Usecase 15: Sorting the data at template level**
 
 21. **Usecase 16: Sorting the data at view level**

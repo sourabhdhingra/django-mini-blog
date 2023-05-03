@@ -437,7 +437,7 @@ class Blogger(models.Model):
 
 21. **Usecase 16: Sorting the data at model level**
     
-    - While defining the model we can also define the way data is supposed to be stored in the database with its creation. We use `Meta` class to decide the ordering. Check `Blogpost` model.
+    - While defining the model we can also define the way data is supposed to be stored in the database with its creation. We use `Meta` class to decide the ordering. Check `Blogpost` model. We define an inner class `Meta` to govern ordering.
         ```
         class Meta:
             ordering = ['-publish_date']
@@ -512,6 +512,62 @@ class Blogger(models.Model):
         ```
 
 25. **Usecase 20: Using slugs to avoid usage of primary keys and improved searchability**
+
+    - __What are slugs?__: Slug is a term from newspaper language. It appears in Django because Django started as a project for a newspaper in Kansas. A slug is a string that can only include characters, numbers, dashes, and underscores. It is the part of a URL that identifies a particular page on a website, in a human-friendly form. Read from link [slug-in-django](https://sentry.io/answers/slug-in-django/)
+
+    - Slugs are human readable, preferred over usage of primary key as identifiers as primary keys should not be revealed to end user, and they help in Search Engine Optimization too. 
+
+    - Django provides a field for this in api reference called `SlugField`
+        ```
+        slug = models.SlugField(max_length=100)
+        ```
+    
+    - Let us check the comment model in `models.py`. More often we want slug to be used along with admin interface in Django. So that when we create any model instances using Django admin, name of instances are shown using the slug value and not object identifier. This desired feature can be achieved using multiple hacks which turn out to necessary often when we use slugs.
+
+    - __Hack 1__: using `prepopulated_fields` from admin interface
+        ```
+        class BlogPostAdmin(admin.ModelAdmin):
+            prepopulated_fields = {'slug': ['title']}
+
+        ```
+        The above tells Django that when Model creation form will already populate the value of slug using the value of the field `title`. So let say you create a blogpost and start entering the title. A django javasript will take care of populating the same value to slug field.
+
+        Also admin form ensures first title value is slugified(with special characters removed, spaces replaced with underscores and all)
+    
+    - __Hack 2__: Ensuring the slug value updation when visitor creates from website.
+
+        Now a blogger could create a blogpost putting in some title. CreateView will take care of all the creation process but we need to ensure that `slug` is rightfully updated. For this we need to add code in our `form_valid` funtion before the object is saved. We use `django.utils.text.slugify` to slugify the title and assign to the slug. Check Blogpost Create View in `views.py`
+        ```
+        def form_valid(self, form) -> HttpResponse:
+            # saving the blogpost but first mapping the logged in user to the blogger
+            blogpost = form.save(commit=False)
+            blogpost.author = models.Blogger.objects.get(user=self.request.user)
+            blogpost.slug = slugify(blogpost.title)
+            blogpost.save()
+            self.object = blogpost
+            return HttpResponseRedirect(self.get_success_url())
+        ```
+    
+    - __Hack 3__: Overcoming the limitation of using `prepopulated_fields`
+
+        The approach discussed before is limited as `prepopulated_fields` only accept a key-value pair where slug would be prepopulated using only the field mentioned in the value of its key. Value would be slugified first ofcourse. But what if we want to write our custom logic. In that case we need to write our own javascript file.
+
+        __Example Usecase__: In admin panel when we create blogger it offers us a dropdown to select the user against which blogger instance is to be created. By default users are offered in form of a dropdown values. So we need a logic that during blogger creation moment we select some valid user the value is set in the slug field after slugification.
+
+        - We create javascript file. Notice that when you inspect the forms of admin panel offered by django their `id` have values in format `id_<field>`. For e.g user dropdown would have value `id_user` as identifier. Check the code in [custom_admin.js](blog/static/js/custom_admin.js)
+
+        - In `admin.py` file we need to tell the corresponding admin class that where to find the javascript file.
+            ```
+            class BloggerAdmin(admin.ModelAdmin):
+                prepopulated_fields = {'slug': ['about']}
+
+                class Media:
+                    js = ['js/custom_admin.js']
+            ```
+    
+    - __Hack 4__: Deciding value during save from admin panel
+
+        We can use prepopulated fields but at the same time override `save_model` function in `admin.py` to tweak with the value of slug field. Check out `CommentAdmin` class in admin.py. We use the same logic when a user creates the comment i.e same code to be added in `form_valid` function of `Comment Createview`
 
 26. **Usecase 21:  Customising 403 and 404 templates**
 

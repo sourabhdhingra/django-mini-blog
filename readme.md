@@ -495,9 +495,23 @@ class Blogger(models.Model):
     
     - Check out all confirm delete pages to see the code.
 
-24. **Usecase 19: Using slugs to avoid usage of primary keys and improved searchability**
+24. **Usecase 19: Improving UX - redirecting back to delete link after cancel**
 
-25. **Usecase 20: Customising 403 and 404 templates**
+    - As a good user expreince when a user cancels a delete operation we would like the user to be returned to the same page where delete option was provided and to the same delete link with in the web page.
 
-26. 
+    - To acheive this we use what is called as bookmark approach using hyperlinks. We use the approach mentioned [here](https://www.w3schools.com/html/html_links_bookmarks.asp). We use identifier of one link as href of another link to move to a specific link within the page.
+
+    - Let us try to understand how it is done for deleting comments. Now in `blogpost_detail.html` if user linked blogger is the same as the commentor of the comments, then we show edit and delete links. For delete link what we can do is use `comment.slug` as identifier.
+        ```
+        <p><a href="{% url 'comment-delete' comment.slug %}" id="{{comment.slug}}" >Delete</a></p>
+        ```
+    
+    - Then when comment delete form is opened, we simulate cancel link as a button and assign `href` the value as `link-to-the-page-with-delete-link#id-of-delete-link` which translates to as below:
+        ```
+        <button> <a href="{{ view.get_success_url }}#{{object.slug}}" style="text-decoration: none; color: black;">Cancel</a></button>
+        ```
+
+25. **Usecase 20: Using slugs to avoid usage of primary keys and improved searchability**
+
+26. **Usecase 21:  Customising 403 and 404 templates**
 

@@ -596,7 +596,9 @@ class Blogger(models.Model):
     
     - Remember if A is mapped to B with A as a foreign key in B then that is many-to-one relationship. Many instances of B could be mapped with one instance of A hence Django provides set of mapped instances with A in A's template. Vice versa is not true and hence we have to take this approach.
 
+    - Also we did not use the static variable `context` because we need access to variables `self` and `kwargs` so that we can get access to the value of `slug` field passed in kwargs from url of template.
+
 27. **Usecase 22:  Customising 403 and 404 templates**
 
-    
+
 

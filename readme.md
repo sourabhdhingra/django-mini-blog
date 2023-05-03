@@ -569,5 +569,34 @@ class Blogger(models.Model):
 
         We can use prepopulated fields but at the same time override `save_model` function in `admin.py` to tweak with the value of slug field. Check out `CommentAdmin` class in admin.py. We use the same logic when a user creates the comment i.e same code to be added in `form_valid` function of `Comment Createview`
 
-26. **Usecase 21:  Customising 403 and 404 templates**
+26. **Usecase 21: Injecting values into an existing context using `get_context_data`**
+
+    - More often we would want to inject some data into context of a template so that we can access it in the template to meet our intended usecase. For example - While creating a comment the comment form should show the blogpost on which you are about to comment.
+
+    - Now in this case we can have access to all the comments on a blogpost on `blogpost_form.html` page using `blogpost.comment_set.all` but we want access to `blogpost` instance during comment creation. At this point of time we have not mapped the blogpost instance yet as no saving has happened. In `comment_form.html` page we want to inform the user the blogpost on which comment is to be made. Hence we need to first search for the blogpost instance and pass it on to the context.
+
+    - We ensure that we are passing the blogpost information using slug in the comment create link that we shown on the `blogpost_detail.html`
+        ```
+        <a href="{% url 'comment-create' blogpost.slug %}">Add a new comment!</a>
+        ```
+    
+    - Then in the corresponding create view we override the function `get_context_data` where we get the existing context data. Then find the blogpost instance using the `blogpost.slug` and append this to the context.
+        ```
+        def get_context_data(self, **kwargs):
+            # Call the base implementation first to get a context
+            context = super().get_context_data(**kwargs)
+            context['blogpost'] = get_object_or_404(models.BlogPost, slug = self.kwargs['slug'])
+            return context
+        ```
+    
+    - Now this context variable `blogpost` should be available in template `comment_form.html`.  Below code is in the html.
+        ```
+        You are commenting on the blogpost "<strong><a href="{% url 'blogpost-detail' blogpost.slug %}">{{blogpost.title}}</a></strong> by <b>{{blogpost.author}} <i>({{blogpost.publish_date}})"</i></b>
+        ```
+    
+    - Remember if A is mapped to B with A as a foreign key in B then that is many-to-one relationship. Many instances of B could be mapped with one instance of A hence Django provides set of mapped instances with A in A's template. Vice versa is not true and hence we have to take this approach.
+
+27. **Usecase 22:  Customising 403 and 404 templates**
+
+    
 

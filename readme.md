@@ -4,8 +4,8 @@ I will be covering below:
 
 - [What is Django?](#what-is-django)
 - [What basics you need to know to grasp what is happening in Django while doing development?](#what-is-mvt-framework)
-- [Important use cases and scenarios that one comes across during basic Web Development.](#solving-the-django-mini-blog-assignment)
-- [Usecases](#usecases-commonly-encountered)
+- [How to start?](#solving-the-django-mini-blog-assignment)
+- [Important use cases and scenarios that one comes across during basic Web Development.](#usecases-commonly-encountered)
 
 My approach will be to help readers learn Django on use case basis rather than forcing one to go through Documentation of Django. I assume that you have already cosumed a bit of online django learning resources especially MDN Django Tutorial and W3 Schools. If not first complete them. After having completed those tutorials this project and its readme.md would appear to you in a different light. It would be far easier to connect the dots. But if you want to start from here directly just go through all of the readme once trying to get the gist of things and not over memorizing stuff. 
 

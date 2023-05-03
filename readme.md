@@ -600,5 +600,20 @@ class Blogger(models.Model):
 
 27. **Usecase 22:  Customising 403 and 404 templates**
 
+    - This is always required. We would ensure DEGUG=False and pages shown for 403 code - Forbidden and 404- resource not found should be our own pages. If not provided Djagno will use default messages but we can provide the templates ourselves. So that we can show our custom messages.
 
+    - These templates would go under `blog\templates` folder with names `403.html` and `404.html`. 
+
+    - There is another approach where we can write views that would accept additional argument `exception` along with the request.
+        ```
+        from django.shortcuts import renderdef page_not_found_view(request, exception):
+            return render(request, '404.html', status=404)
+        ```
+    
+    - Then we can add the handler for the same in `urls.py`.
+        ```
+        handler404 = "django_404_project.views.page_not_found_view"
+        ```
+    
+    - `404.html` still needs to be created. Since we create them on our own we can define our own content in them.
 

@@ -1,4 +1,7 @@
 # Mini Blog in Django
+
+![Project Thumbnail](resources/mini-blog-django.png)
+
 I created this github project to learn Django which can be referenced by others who are interested in walking down the same road.
 I will be covering below:
 
@@ -77,7 +80,7 @@ We will solve the [Django Mini blog Assignment](https://developer.mozilla.org/en
         - first function is `__str__` that is overridern to return the desired name for the object which could be displayed in admin site. (Note: Here we assume you have gone through the [tutorial](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Tutorial_local_library_website) )
         - second function is `get_absolute_url` which is useful when we will dive into views (CreateView, ListView etc). After creating a blogger instance we can use the default redirect to the url provided by this function. In the code below the function returns the path to blogger-detail page. We will further dive into it.
 
-```
+```python
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
@@ -104,7 +107,7 @@ class Blogger(models.Model):
 
     - In `views.py` we write functions or class-based views that would render and return a certain template. We map the view written in `views.py` to a specific url pattern that a browser could request. When the specific request is made Django knows what to show to the user based upon view-to-url mapping.
     - As a simple example lets consider a home page that would be shown once a user hits the domain name only.
-        ```
+        ```python
         urlpatterns = [
         path('', views.home, name='home'),
         ]
@@ -123,7 +126,7 @@ class Blogger(models.Model):
     - When we create a django project using `django-admin startproject miniblog .` then a file named `urls.py` is created at the project level. 
     - When we create a django app using `django-admin startapp blog` then another file with same name `urls.py` is added to the app level structure.
     - Hence we have two `urls.py` files. We use the one at app level to add urls specific to `blog\` and updated the project level `urls.py` to include `blog.urls` 
-        ```
+        ```python
         # miniblog.urls.py - file at project level includes the urls from app level i.e blog.url.py
         from django.urls import path, include
 
@@ -149,7 +152,7 @@ class Blogger(models.Model):
     - More often we want to show a list of data available for e.g in our case we would like to show the list of bloggers on a particular page.
     - Django provides an inbuilt-view for this `django.views.generic.ListView`
     - We can write a class based view extending the ListView class. We need to tell the new class which model to use.
-        ```
+        ```python
         from django.views import generic
 
 
@@ -167,7 +170,7 @@ class Blogger(models.Model):
 
     - Extending base template to create `blogger_list.html`. Use syntax at the top `{% extends 'base_generic.html' %}` to extend. In base template you can define blocks as ` {% block content%}{% endblock %}` and you can override the block in child template using name of the block.  Below is how the blogger_list template looks.
 
-        ```
+        ```html
         {% extends 'base_generic.html' %}
         {% block content %}
         <div>
@@ -204,7 +207,7 @@ class Blogger(models.Model):
     - Also notice in `blogger_list.html` Django by default sets a variable in the template context with format `model_list` which translates to `blogger_list` in our case.
 
     - Then using the Django For-Loop we iterate through the blogger list, access the blogger iterable and show an anchor based hyperlink using iterable. Check code below:
-        ```
+        ```html
         {% for blogger in blogger_list %} 
         <li><a href="{% url 'blogger-detail' blogger.slug %}">{{blogger.user.first_name}} {{blogger.user.last_name}}</a> </li>
         {% endfor %}
@@ -216,11 +219,11 @@ class Blogger(models.Model):
     - Then we have another column `updated_at` which gets updated with date time everytime a resource is updated.
     - In Django we can achieve the desired functionality by passing certain arguments to DateFied while defining fields at model level.
     - `auto_now_add=True` will set the DateField column value to `timezone.now()` only when the instance is created. We would not like the value for the column to change so we can set `editable=False`. `auto_now_add` value is set only when a resource is added then afterwards it is no longer affected.
-        ```
+        ```python
         publish_date = models.DateTimeField(editable=False, auto_now_add=True)
         ```
     - `auto_now=True` will set the DateField column value to be updated with timezone.now() everytime the instance is saved i.e when the save method is called. Likewise we would not like this filed to be edited by the user but only be affected by the system and we should set `editable=False`
-        ```
+        ```python
         last_updated = models.DateTimeField(editable=False, auto_now=True)
         ```
 
@@ -240,7 +243,7 @@ class Blogger(models.Model):
     - Let us understand the above point with an example. While creating a blogpost it is essential to map the blogger of the blogpost with the logged in user. First we need to fetch the blogger with the logged in user. That we can get through `self.request.user` where `self` is available within the overriden function. `request` is the ongoing request and `user` gives you the logged in django `auth.user`. 
 
     - We fetch the `blogger` using the `user` available and assign it to the `blogpost.blogger`
-        ```
+        ```python
         blogpost.author = models.Blogger.objects.get(user=self.request.user)
         ```
 
@@ -263,7 +266,7 @@ class Blogger(models.Model):
     - By default the template name is supposed to use the suffix `_form` which is same as that used for `CreateView`. Usually one does not have to create a separate update form. But if a need arises we can override the suffix value and create an HTML page accordignly: `template_name_suffix = "_update_form"` and page name would be `blopost_update_form.html`
 
     - Either we can define success url by overriding `get_success_url`  or we can do it in less code by defining the absoulute url at model level. Go to the model class and override function `get_absolute_url` returning the detail page url for the instance.
-        ```
+        ```python
         def get_absolute_url(self) -> str:
             return reverse_lazy('blogpost-detail', kwargs={'slug': self.slug})
         ```
@@ -277,7 +280,7 @@ class Blogger(models.Model):
     - Therefore the suffix for the template is `_confirm_delete`. Example - `blogpost_confirm_delete.html`.
 
     - Like `update` we need something to identify the resource we want to delete. Hence we need to construct the url pattern accordingly and map with the delete view. 
-        ```
+        ```python
         path('blogpost/<slug:slug>/delete', views.BlogPostDelete.as_view(), name='blogpost-delete'),
         ```
 
@@ -304,7 +307,7 @@ class Blogger(models.Model):
 15. **Usecase 10: Using inbuilt Authentication to support login, logout, password change etc**
 
     - We can use the inbuilt set of urls and pages available `django.contrib.auth.urls`. 
-        ```
+        ```python
         path('accounts/', include('django.contrib.auth.urls')),
         ```
     - This provides the below urlpatterns. Django provides these as admin pages.          
@@ -324,7 +327,7 @@ class Blogger(models.Model):
     - If user is logged in then we need to show the logout link else we should show login link. We can check this condition using `{% if user.is_authenticated %}` in template itself. Check [base_generic.html](blog/templates/base_generic.html)
 
     - After login through inbuilt django feature it redirects to the profile page. Either we can fulfill this need by creating profile section or we can chose to redirect to another page. This can be achieved by overriding `LOGIN_REDIRECT_URL`. Check in [settings.py](miniblog/settings.py)
-        ```
+        ```python
         # Redirect url after successful login
         # default = /accounts/profile
         LOGIN_REDIRECT_URL = 'home'
@@ -345,12 +348,12 @@ class Blogger(models.Model):
     - We will use the url pattern for desired link as `path('blogposts/<str:username>', views.BlogPostList.as_view(), name='user-blogs'),`.
 
     - Now when `user-blogs` is used in the template we ensure that we pass the username as the kwarg to it. 
-        ```
+        ```html
         <li><a href="{% url 'user-blogs' userlinked_blogger.user.username %}">See your blogposts!</a> </li>
         ```
     
     - Next we need to override the function `get_queryset` in our class that extended ListView. Check `BlogPostList` in [views.py](blog/views.py)
-        ```
+        ```python
         def get_queryset(self):
             queryset = super().get_queryset()
             if 'username' in self.kwargs:
@@ -390,7 +393,7 @@ class Blogger(models.Model):
     - When this field is used in a view, that view automatically sends a `page_obj` in context to the template. Using that object we can use template language to support pagination in the html template. 
 
     - In `base_generic.html` we define a pagination block using this `page_obj`. Check code below:
-        ```
+        ```html
         % block pagination %}
             {% if page_obj %}
             <div class="pagination">
@@ -431,7 +434,7 @@ class Blogger(models.Model):
     - For this usecase we can use [django filter](https://www.w3schools.com/django/django_ref_filter.php) `dictsortreversed`. 
 
     - First thing to note is we have access to list of foreign key field mappings using a python set. Using this `set` and `dictsortreversed` we can get a list of values sorted in reverese order on the basis of a particular column. In this case it would be publish_date.
-        ```
+        ```html
         {% for blogpost in blogger.blogpost_set.all|dictsortreversed:"publish_date" %}
                 <li><a href="{% url 'blogpost-detail' blogpost.slug %}">{{blogpost.title}}</a> ({{blogpost.publish_date}})</li>
         {% endfor %}
@@ -440,13 +443,13 @@ class Blogger(models.Model):
 21. **Usecase 16: Sorting the data at model level**
     
     - While defining the model we can also define the way data is supposed to be stored in the database with its creation. We use `Meta` class to decide the ordering. Check `Blogpost` model. We define an inner class `Meta` to govern ordering.
-        ```
+        ```python
         class Meta:
             ordering = ['-publish_date']
         ```
     
     - Now when we display the data for this model using a listview data would default be in a descending order on `publish_date`. But it is advisable to ensure it at the list level to perform the ordering using a queryset and return the data. For e.g when blogposts are viewed for a specific user then we need to repeat the logic of ordering the results on the basis of `publish_date`. Check `get_queryset` in blogpost listview. We have added support where logged in user tries to access his own blogs.
-        ```
+        ```python
         def get_queryset(self):
             queryset = super().get_queryset()
             if 'username' in self.kwargs:
@@ -472,7 +475,7 @@ class Blogger(models.Model):
     - The function filters the blogger based upon the authenticated user set in a key value pair and returns it.
 
     - This object is accessible using the key name of the variable `userlinked_blogger` in template. Based on the availablity we write the logic to show a link to create a blogger account or show the links to create a blogpost etc. Check below code in `base_generic.html`
-        ```
+        ```html
         {% if userlinked_blogger is None%}
                     <li><a href="{% url 'blogger-create' %}">About yourself!</a> </li>
         {% else %}
@@ -487,7 +490,7 @@ class Blogger(models.Model):
     - It is a good thing to have a cancel button in delete forms. If a user cancels the delete operation on `confirm_delete` page then we need to redirect user to some appropriate page.
 
     - __Approach__: Add cancel link and show it as button using CSS. Now delete template by default has an object variable in its context which we can use to redirect the user back to its detail page. see code below in `blogger_confirm_delete.html`
-        ```
+        ```html
         <button><a href="{{ object.get_absolute_url }}" style="text-decoration: none; color: black;">Cancel</a></button>
         ```
     
@@ -504,12 +507,12 @@ class Blogger(models.Model):
     - To acheive this we use what is called as bookmark approach using hyperlinks. We use the approach mentioned [here](https://www.w3schools.com/html/html_links_bookmarks.asp). We use identifier of one link as href of another link to move to a specific link within the page.
 
     - Let us try to understand how it is done for deleting comments. Now in `blogpost_detail.html` if user linked blogger is the same as the commentor of the comments, then we show edit and delete links. For delete link what we can do is use `comment.slug` as identifier.
-        ```
+        ```html
         <p><a href="{% url 'comment-delete' comment.slug %}" id="{{comment.slug}}" >Delete</a></p>
         ```
     
     - Then when comment delete form is opened, we simulate cancel link as a button and assign `href` the value as `link-to-the-page-with-delete-link#id-of-delete-link` which translates to as below:
-        ```
+        ```html
         <button> <a href="{{ view.get_success_url }}#{{object.slug}}" style="text-decoration: none; color: black;">Cancel</a></button>
         ```
 
@@ -520,18 +523,18 @@ class Blogger(models.Model):
     - Slugs are human readable, preferred over usage of primary key as identifiers as primary keys should not be revealed to end user, and they help in Search Engine Optimization too. 
 
     - Django provides a field for this in api reference called `SlugField`
-        ```
+        ```python
         slug = models.SlugField(max_length=100)
         ```
     
     - Let us check the comment model in `models.py`. More often we want slug to be used along with admin interface in Django. So that when we create any model instances using Django admin, name of instances are shown using the slug value and not object identifier. This desired feature can be achieved using multiple hacks which turn out to necessary often when we use slugs.
 
     - __Hack 1__: using `prepopulated_fields` from admin interface
-        ```
+        ```python
         class BlogPostAdmin(admin.ModelAdmin):
             prepopulated_fields = {'slug': ['title']}
-
         ```
+
         The above tells Django that when Model creation form will already populate the value of slug using the value of the field `title`. So let say you create a blogpost and start entering the title. A django javasript will take care of populating the same value to slug field.
 
         Also admin form ensures first title value is slugified(with special characters removed, spaces replaced with underscores and all)
@@ -539,7 +542,7 @@ class Blogger(models.Model):
     - __Hack 2__: Ensuring the slug value updation when visitor creates from website.
 
         Now a blogger could create a blogpost putting in some title. CreateView will take care of all the creation process but we need to ensure that `slug` is rightfully updated. For this we need to add code in our `form_valid` funtion before the object is saved. We use `django.utils.text.slugify` to slugify the title and assign to the slug. Check Blogpost Create View in `views.py`
-        ```
+        ```python
         def form_valid(self, form) -> HttpResponse:
             # saving the blogpost but first mapping the logged in user to the blogger
             blogpost = form.save(commit=False)
@@ -559,7 +562,7 @@ class Blogger(models.Model):
         - We create javascript file. Notice that when you inspect the forms of admin panel offered by django their `id` have values in format `id_<field>`. For e.g user dropdown would have value `id_user` as identifier. Check the code in [custom_admin.js](blog/static/js/custom_admin.js)
 
         - In `admin.py` file we need to tell the corresponding admin class that where to find the javascript file.
-            ```
+            ```python
             class BloggerAdmin(admin.ModelAdmin):
                 prepopulated_fields = {'slug': ['about']}
 
@@ -578,12 +581,12 @@ class Blogger(models.Model):
     - Now in this case we can have access to all the comments on a blogpost on `blogpost_form.html` page using `blogpost.comment_set.all` but we want access to `blogpost` instance during comment creation. At this point of time we have not mapped the blogpost instance yet as no saving has happened. In `comment_form.html` page we want to inform the user the blogpost on which comment is to be made. Hence we need to first search for the blogpost instance and pass it on to the context.
 
     - We ensure that we are passing the blogpost information using slug in the comment create link that we shown on the `blogpost_detail.html`
-        ```
+        ```html
         <a href="{% url 'comment-create' blogpost.slug %}">Add a new comment!</a>
         ```
     
     - Then in the corresponding create view we override the function `get_context_data` where we get the existing context data. Then find the blogpost instance using the `blogpost.slug` and append this to the context.
-        ```
+        ```python
         def get_context_data(self, **kwargs):
             # Call the base implementation first to get a context
             context = super().get_context_data(**kwargs)
@@ -592,7 +595,7 @@ class Blogger(models.Model):
         ```
     
     - Now this context variable `blogpost` should be available in template `comment_form.html`.  Below code is in the html.
-        ```
+        ```python
         You are commenting on the blogpost "<strong><a href="{% url 'blogpost-detail' blogpost.slug %}">{{blogpost.title}}</a></strong> by <b>{{blogpost.author}} <i>({{blogpost.publish_date}})"</i></b>
         ```
     
@@ -607,13 +610,13 @@ class Blogger(models.Model):
     - These templates would go under `blog\templates` folder with names `403.html` and `404.html`. 
 
     - There is another approach where we can write views that would accept additional argument `exception` along with the request.
-        ```
+        ```python
         from django.shortcuts import renderdef page_not_found_view(request, exception):
             return render(request, '404.html', status=404)
         ```
     
     - Then we can add the handler for the same in `urls.py`.
-        ```
+        ```python
         handler404 = "django_404_project.views.page_not_found_view"
         ```
     
